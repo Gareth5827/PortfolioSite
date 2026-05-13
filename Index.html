@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Gareth Horne · Intro</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: black;
+      overflow-x: hidden;
+    }
+
+    /* ----- header (always on top, white, 100px tall) ----- */
+    .main-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 80px; /* 80px gap between links */
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .main-header a {
+      text-decoration: none;
+      color: black;
+      font-size: 75pt;
+      font-family: Arial, sans-serif;
+      font-weight: 400;
+      line-height: 1;
+      display: inline-block;
+      transition: opacity 0.2s ease;
+    }
+
+    .main-header a:hover {
+      opacity: 0.7;
+    }
+
+    /* page container to push content below fixed header */
+    .page-content {
+      padding-top: 100px; /* header height */
+    }
+
+    /* ----- intro page sections (black background, full width) ----- */
+    .intro-section {
+      width: 100%;
+      min-height: 500px;
+      height: 500px;
+      background-color: black;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Section 1 specific: selfie background 45% opacity */
+    .section1 {
+      background-color: black;
+      position: relative;
+    }
+
+    .selfie-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.45;
+      z-index: 0;
+    }
+
+    .text-overlay {
+      position: relative;
+      z-index: 2;
+      color: white;
+      text-align: left;
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 20px;
+    }
+
+    .name-text {
+      font-size: 52pt;
+      font-family: Arial, sans-serif;
+      font-weight: 400;
+      margin-bottom: 20px;
+    }
+
+    .bio-text {
+      font-size: 24pt;
+      font-family: Arial, sans-serif;
+      margin-left: 50px; /* 50px to the right relative to name */
+      margin-bottom: 30px;
+      line-height: 1.3;
+      max-width: 900px;
+    }
+
+    .say-hi-btn {
+      background-color: yellow;
+      color: black;
+      border: none;
+      font-size: 24pt;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      padding: 15px 40px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-left: 50px; /* aligns under bio block */
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .say-hi-btn:hover {
+      background-color: #ffe600;
+    }
+
+    /* Section 2: GradBG1 background + slideshow */
+    .section2 {
+      background-color: black;
+      position: relative;
+    }
+
+    .gradbg-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    .slideshow-container {
+      position: relative;
+      z-index: 2;
+      width: 500px;
+      height: 500px;
+      margin-left: 5%; /* left side aligned */
+      background: transparent;
+    }
+
+    .slideshow-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 500px;
+      height: 500px;
+      object-fit: cover;
+      transition: opacity 1s ease-in-out;
+    }
+
+    #imageA {
+      z-index: 2;
+      opacity: 1;
+    }
+
+    #imageB {
+      z-index: 1;
+      opacity: 0;
+    }
+
+    /* Section 3 */
+    .section3 {
+      flex-direction: column;
+      text-align: center;
+      color: white;
+      font-family: Arial, sans-serif;
+      gap: 15px;
+    }
+
+    .big-text {
+      font-size: 80pt;
+      font-weight: 400;
+      line-height: 1.1;
+    }
+
+    .email-text {
+      font-size: 80pt;
+      font-weight: 400;
+      margin-top: 10px;
+      word-break: break-word;
+    }
+
+    /* Responsive fallback for very small screens */
+    @media (max-width: 1000px) {
+      .main-header a {
+        font-size: 40pt;
+      }
+      .main-header {
+        gap: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- FIXED HEADER (white, 100px, always on top) -->
+  <header class="main-header">
+    <a href="index.html">Home</a>
+    <a href="gamepage.html">Games</a>
+    <a href="voicepage.html">Voices</a>
+    <a href="esportpage.html">Esports</a>
+    <a href="contactpage.html">Contact</a>
+  </header>
+
+  <!-- INTRO PAGE (default) content -->
+  <div class="page-content" id="introPage">
+    <!-- Section 1: Selfie 45% + text + button -->
+    <section class="intro-section section1">
+      <img src="Images/Selfie.jpg" alt="Selfie" class="selfie-bg" id="selfieImg">
+      <div class="text-overlay">
+        <div class="name-text">Gareth Horne</div>
+        <div class="bio-text">
+          I'm an all in one people person that excels at creativity, problem solving, and being myself! I have enough energy to light up a city block, but a gentle enough demeanor to be approachable by everyone.<br><br>
+          I love working, and I can't wait to add passion into your next idea!
+        </div>
+        <a href="contactpage.html" class="say-hi-btn">Say hi!</a>
+      </div>
+    </section>
+
+    <!-- Section 2: GradBG1 + slideshow -->
+    <section class="intro-section section2">
+      <img src="Images/GradBG1.jpg" alt="Gradient Background" class="gradbg-image" id="gradBg">
+      <div class="slideshow-container">
+        <img id="imageA" class="slideshow-img" src="" alt="Slide A">
+        <img id="imageB" class="slideshow-img" src="" alt="Slide B">
+      </div>
+    </section>
+
+    <!-- Section 3: big text -->
+    <section class="intro-section section3">
+      <div class="big-text">Games • Voices • Esports • The WHOLE Shebang</div>
+      <div class="email-text">Gareth_Horne@Outlook.com</div>
+    </section>
+  </div>
+
+  <script>
+    (function() {
+      // ----- SLIDESHOW LOGIC (Images from SlideshowImages folder) -----
+      // Folder: Images/SlideshowImages/
+      // Assumed images: Image1.jpg, Image2.jpg, Image3.jpg, Image4.jpg (or more)
+      // You can add more by extending the array.
+      const slideshowFolder = "Images/SlideshowImages/";
+      const imageFiles = [
+        "Image1.jpg",
+        "Image2.jpg",
+        "Image3.jpg",
+        "Image4.jpg"
+      ];
+      
+      let currentIndex = 0;        // index of image currently displayed (ImageA)
+      let nextImageIndex = 1;     // index that ImageB will fade into
+      
+      const imageA = document.getElementById('imageA');
+      const imageB = document.getElementById('imageB');
+      
+      // Set initial state: ImageA shows first image, ImageB hidden
+      function initializeSlideshow() {
+        if (!imageA || !imageB) return;
+        if (imageFiles.length === 0) return;
+        
+        // ImageA defaults to first image
+        imageA.src = slideshowFolder + imageFiles[0];
+        imageA.style.opacity = 1;
+        imageB.style.opacity = 0;
+        currentIndex = 0;
+        nextImageIndex = 1 % imageFiles.length;
+        // Preload next image for ImageB (hidden)
+        imageB.src = slideshowFolder + imageFiles[nextImageIndex];
+      }
+      
+      // Advance slideshow: fade ImageB to opacity 1, then swap
+      function fadeToNext() {
+        if (!imageA || !imageB || imageFiles.length === 0) return;
+        
+        // Ensure ImageB has the next image set
+        imageB.src = slideshowFolder + imageFiles[nextImageIndex];
+        
+        // Force reflow to restart transition if needed
+        void imageB.offsetWidth;
+        
+        // Fade ImageB from 0 to 1 over 1 second (transition defined in CSS)
+        imageB.style.opacity = 1;
+        
+        // After transition completes (1s), swap roles
+        setTimeout(() => {
+          // ImageA becomes what ImageB shows
+          imageA.src = imageB.src;
+          imageA.style.opacity = 1;
+          // Hide ImageB instantly
+          imageB.style.opacity = 0;
+          
+          // Update indices
+          currentIndex = nextImageIndex;
+          // Move to next image (cycle)
+          nextImageIndex = (nextImageIndex + 1) % imageFiles.length;
+          
+          // Preload next image into ImageB (still hidden)
+          imageB.src = slideshowFolder + imageFiles[nextImageIndex];
+          
+          // Schedule next cycle after 6 seconds from now
+          scheduleNext();
+        }, 1000); // matches CSS transition duration
+      }
+      
+      let timer = null;
+      function scheduleNext() {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+          fadeToNext();
+        }, 6000); // 6 seconds delay
+      }
+      
+      // Start slideshow
+      initializeSlideshow();
+      // Begin cycle: first fade happens after 6 seconds
+      if (imageFiles.length > 1) {
+        scheduleNext();
+      }
+      
+      // Handle image loading errors gracefully (set fallback or keep)
+      window.addEventListener('error', function(e) {
+        if (e.target && e.target.tagName === 'IMG') {
+          // If image fails, could set a placeholder, but we keep as is.
+          console.warn('Image failed to load:', e.target.src);
+        }
+      }, true);
+      
+      // Ensure selfie and grad background also attempt to load
+      // (They are set directly in HTML)
+    })();
+  </script>
+</body>
+</html>
