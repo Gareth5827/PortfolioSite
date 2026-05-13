@@ -66,36 +66,39 @@
       justify-content: center;
     }
 
-    /* Section 1 specific: selfie background 45% opacity */
-    .section1 {
-      background-color: black;
-      position: relative;
-    }
+  .section1 {
+    background-color: black;
+    position: relative;
+    display: block; /* Changed from flex to block for proper absolute positioning */
+  }
 
-    .selfie-bg {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0.45;
-      z-index: 0;
-    }
-
-    .text-overlay {
-      position: relative;
-      z-index: 2;
-      color: white;
-      text-align: left;
-      width: 90%;
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 20px;
-    }
+  .selfie-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.45;
+    z-index: 0;
+    display: block; /* Ensure image displays as block */
+  }
+  
+  .text-overlay {
+    position: relative;
+    z-index: 2;
+    color: white;
+    text-align: left;
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 40px 20px; /* Increased padding for better vertical centering */
+    height: 100%;
+    justify-content: center; /* Center content vertically */
+  }
 
     .name-text {
       font-size: 52pt;
@@ -133,50 +136,54 @@
       background-color: #ffe600;
     }
 
-    /* Section 2: GradBG1 background + slideshow */
-    .section2 {
-      background-color: black;
-      position: relative;
-    }
-
-    .gradbg-image {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      z-index: 0;
-    }
-
-    .slideshow-container {
-      position: relative;
-      z-index: 2;
-      width: 500px;
-      height: 500px;
-      margin-left: 5%; /* left side aligned */
-      background: transparent;
-    }
-
-    .slideshow-img {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 500px;
-      height: 500px;
-      object-fit: cover;
-      transition: opacity 1s ease-in-out;
-    }
-
-    #imageA {
-      z-index: 2;
-      opacity: 1;
-    }
-
-    #imageB {
-      z-index: 1;
-      opacity: 0;
-    }
+  /* Section 2: GradBG1 background + slideshow */
+  .section2 {
+    background-color: black;
+    position: relative;
+    display: block; /* Changed from flex to block for proper absolute positioning */
+  }
+  
+  .gradbg-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: 0;
+    display: block; /* Ensure image displays as block */
+  }
+  
+  .slideshow-container {
+    position: absolute; /* Changed to absolute for proper layering */
+    z-index: 2;
+    width: 500px;
+    height: 500px;
+    left: 5%; /* Left side aligned */
+    top: 0; /* Align to top of section */
+    background: transparent;
+  }
+  
+  .slideshow-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 500px;
+    height: 500px;
+    object-fit: cover;
+    transition: opacity 1s ease-in-out;
+  }
+  
+  /* FIXED: ImageA is BEHIND, ImageB is ON TOP for clean fade */
+  #imageA {
+    z-index: 1; /* Behind */
+    opacity: 1;
+  }
+  
+  #imageB {
+    z-index: 2; /* On top for fade effect */
+    opacity: 0;
+  }
 
     /* Section 3 */
     .section3 {
@@ -236,14 +243,14 @@
       </div>
     </section>
 
-    <!-- Section 2: GradBG1 + slideshow -->
-    <section class="intro-section section2">
-      <img src="Images/GradBG1.jpg" alt="Gradient Background" class="gradbg-image" id="gradBg">
-      <div class="slideshow-container">
-        <img id="imageA" class="slideshow-img" src="" alt="Slide A">
-        <img id="imageB" class="slideshow-img" src="" alt="Slide B">
-      </div>
-    </section>
+  <!-- Section 2: GradBG1 + slideshow -->
+  <section class="intro-section section2">
+    <img src="Images/GradBG1.jpg" alt="Gradient Background" class="gradbg-image" id="gradBg">
+    <div class="slideshow-container">
+      <img id="imageA" class="slideshow-img" src="" alt="Slide A">
+      <img id="imageB" class="slideshow-img" src="" alt="Slide B">
+    </div>
+  </section>
 
     <!-- Section 3: big text -->
     <section class="intro-section section3">
@@ -321,25 +328,62 @@
       });
     }
     
-    // Initialize slideshow with discovered images
-    function initializeSlideshow() {
-      if (!imageA || !imageB || imageFiles.length === 0) return;
-      
-      // Set initial state
-      imageA.src = slideshowFolder + imageFiles[0];
+  // Initialize slideshow with discovered images
+  function initializeSlideshow() {
+    if (!imageA || !imageB || imageFiles.length === 0) return;
+    
+    // Set initial state - ImageA behind (visible), ImageB on top (hidden)
+    imageA.src = slideshowFolder + imageFiles[0];
+    imageA.style.opacity = 1;
+    imageA.style.zIndex = 1; // Behind
+    
+    imageB.style.opacity = 0;
+    imageB.style.zIndex = 2; // On top
+    
+    currentIndex = 0;
+    nextImageIndex = imageFiles.length > 1 ? 1 : 0;
+    
+    // Preload next image into ImageB (hidden on top)
+    if (imageFiles.length > 1) {
+      imageB.src = slideshowFolder + imageFiles[nextImageIndex];
+      slideshowReady = true;
+      scheduleNext();
+    }
+  }
+  
+  // Advance slideshow with proper fade effect
+  function fadeToNext() {
+    if (!imageA || !imageB || !slideshowReady || imageFiles.length <= 1) return;
+    
+    // Set ImageB to next image (it's on top, currently hidden)
+    imageB.src = slideshowFolder + imageFiles[nextImageIndex];
+    
+    // Force reflow for smooth transition
+    void imageB.offsetWidth;
+    
+    // Fade IN ImageB (it's on top, so this creates a smooth transition)
+    imageB.style.opacity = 1;
+    
+    // After 1 second transition, swap
+    setTimeout(() => {
+      // Move ImageB's content to ImageA (behind)
+      imageA.src = imageB.src;
       imageA.style.opacity = 1;
+      
+      // Hide ImageB instantly (it's on top)
       imageB.style.opacity = 0;
       
-      currentIndex = 0;
-      nextImageIndex = imageFiles.length > 1 ? 1 : 0;
+      // Update indices
+      currentIndex = nextImageIndex;
+      nextImageIndex = (nextImageIndex + 1) % imageFiles.length;
       
-      // Preload next image
-      if (imageFiles.length > 1) {
-        imageB.src = slideshowFolder + imageFiles[nextImageIndex];
-        slideshowReady = true;
-        scheduleNext();
-      }
-    }
+      // Preload next image into hidden ImageB (still on top, ready to fade in)
+      imageB.src = slideshowFolder + imageFiles[nextImageIndex];
+      
+      // Schedule next cycle
+      scheduleNext();
+    }, 1000);
+  }
     
     // Advance slideshow with fade effect
     function fadeToNext() {
