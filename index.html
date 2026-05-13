@@ -258,95 +258,155 @@
       // Folder: Images/SlideshowImages/
       // Assumed images: Image1.jpg, Image2.jpg, Image3.jpg, Image4.jpg (or more)
       // You can add more by extending the array.
-      const slideshowFolder = "Images/SlideshowImages/";
-      const imageFiles = [
-        "Image1.jpg",
-        "Image2.jpg",
-        "Image3.jpg",
-        "Image4.jpg"
+    const slideshowFolder = "Images/SlideshowImages/";
+    
+    const imageA = document.getElementById('imageA');
+    const imageB = document.getElementById('imageB');
+    
+    let imageFiles = []; // Will be populated dynamically
+    let currentIndex = 0;
+    let nextImageIndex = 1;
+    let timer = null;
+    let slideshowReady = false;
+    
+    // Function to discover images in the folder
+    async function discoverImages() {
+      // Common image names to try (you can expand this list)
+      const commonNames = [
+        "CDL2025", "Fancy7", "Teacup", "Image1", "Image2", "Image3", "Image4",
+        "Image5", "Image6", "Image7", "Image8", "Image9", "Image10",
+        "photo1", "photo2", "photo3", "slide1", "slide2", "slide3"
       ];
       
-      let currentIndex = 0;        // index of image currently displayed (ImageA)
-      let nextImageIndex = 1;     // index that ImageB will fade into
+      const extensions = ['.jpg', '.jpeg', '.png', '.JPG', '.JPEG', '.PNG'];
+      const discoveredImages = [];
       
-      const imageA = document.getElementById('imageA');
-      const imageB = document.getElementById('imageB');
-      
-      // Set initial state: ImageA shows first image, ImageB hidden
-      function initializeSlideshow() {
-        if (!imageA || !imageB) return;
-        if (imageFiles.length === 0) return;
-        
-        // ImageA defaults to first image
-        imageA.src = slideshowFolder + imageFiles[0];
-        imageA.style.opacity = 1;
-        imageB.style.opacity = 0;
-        currentIndex = 0;
-        nextImageIndex = 1 % imageFiles.length;
-        // Preload next image for ImageB (hidden)
-        imageB.src = slideshowFolder + imageFiles[nextImageIndex];
+      // Try to load each potential image
+      for (const name of commonNames) {
+        for (const ext of extensions) {
+          const imagePath = slideshowFolder + name + ext;
+          try {
+            const exists = await checkImageExists(imagePath);
+            if (exists && !discoveredImages.includes(name + ext)) {
+              discoveredImages.push(name + ext);
+              break; // Found this image, move to next name
+            }
+          } catch (e) {
+            // Continue to next attempt
+          }
+        }
       }
       
-      // Advance slideshow: fade ImageB to opacity 1, then swap
-      function fadeToNext() {
-        if (!imageA || !imageB || imageFiles.length === 0) return;
-        
-        // Ensure ImageB has the next image set
-        imageB.src = slideshowFolder + imageFiles[nextImageIndex];
-        
-        // Force reflow to restart transition if needed
-        void imageB.offsetWidth;
-        
-        // Fade ImageB from 0 to 1 over 1 second (transition defined in CSS)
-        imageB.style.opacity = 1;
-        
-        // After transition completes (1s), swap roles
-        setTimeout(() => {
-          // ImageA becomes what ImageB shows
-          imageA.src = imageB.src;
-          imageA.style.opacity = 1;
-          // Hide ImageB instantly
-          imageB.style.opacity = 0;
-          
-          // Update indices
-          currentIndex = nextImageIndex;
-          // Move to next image (cycle)
-          nextImageIndex = (nextImageIndex + 1) % imageFiles.length;
-          
-          // Preload next image into ImageB (still hidden)
-          imageB.src = slideshowFolder + imageFiles[nextImageIndex];
-          
-          // Schedule next cycle after 6 seconds from now
-          scheduleNext();
-        }, 1000); // matches CSS transition duration
+      // If we found images, use them; otherwise fall back to default list
+      if (discoveredImages.length > 0) {
+        // Sort alphabetically to ensure consistent ordering
+        imageFiles = discoveredImages.sort();
+        console.log('Discovered slideshow images:', imageFiles);
+      } else {
+        // Fallback to default images if none discovered
+        console.warn('No images found in SlideshowImages folder, using defaults');
+        imageFiles = ["Image1.jpg", "Image2.jpg", "Image3.jpg", "Image4.jpg"];
       }
       
-      let timer = null;
-      function scheduleNext() {
-        if (timer) clearTimeout(timer);
-        timer = setTimeout(() => {
-          fadeToNext();
-        }, 6000); // 6 seconds delay
-      }
-      
-      // Start slideshow
       initializeSlideshow();
-      // Begin cycle: first fade happens after 6 seconds
+    }
+    
+    // Check if an image exists by trying to load it
+    function checkImageExists(url) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = url;
+      });
+    }
+    
+    // Initialize slideshow with discovered images
+    function initializeSlideshow() {
+      if (!imageA || !imageB || imageFiles.length === 0) return;
+      
+      // Set initial state
+      imageA.src = slideshowFolder + imageFiles[0];
+      imageA.style.opacity = 1;
+      imageB.style.opacity = 0;
+      
+      currentIndex = 0;
+      nextImageIndex = imageFiles.length > 1 ? 1 : 0;
+      
+      // Preload next image
       if (imageFiles.length > 1) {
+        imageB.src = slideshowFolder + imageFiles[nextImageIndex];
+        slideshowReady = true;
         scheduleNext();
       }
+    }
+    
+    // Advance slideshow with fade effect
+    function fadeToNext() {
+      if (!imageA || !imageB || !slideshowReady || imageFiles.length <= 1) return;
       
-      // Handle image loading errors gracefully (set fallback or keep)
-      window.addEventListener('error', function(e) {
-        if (e.target && e.target.tagName === 'IMG') {
-          // If image fails, could set a placeholder, but we keep as is.
-          console.warn('Image failed to load:', e.target.src);
+      // Set ImageB to next image
+      imageB.src = slideshowFolder + imageFiles[nextImageIndex];
+      
+      // Force reflow for smooth transition
+      void imageB.offsetWidth;
+      
+      // Fade in ImageB
+      imageB.style.opacity = 1;
+      
+      // After 1 second transition, swap
+      setTimeout(() => {
+        // ImageA takes over ImageB's content
+        imageA.src = imageB.src;
+        imageA.style.opacity = 1;
+        
+        // Hide ImageB
+        imageB.style.opacity = 0;
+        
+        // Update indices
+        currentIndex = nextImageIndex;
+        nextImageIndex = (nextImageIndex + 1) % imageFiles.length;
+        
+        // Preload next image into hidden ImageB
+        imageB.src = slideshowFolder + imageFiles[nextImageIndex];
+        
+        // Schedule next cycle
+        scheduleNext();
+      }, 1000);
+    }
+    
+    function scheduleNext() {
+      if (timer) clearTimeout(timer);
+      if (imageFiles.length <= 1) return;
+      
+      timer = setTimeout(() => {
+        fadeToNext();
+      }, 6000);
+    }
+    
+    // Start image discovery when page loads
+    discoverImages();
+    
+    // Handle image loading errors gracefully
+    window.addEventListener('error', function(e) {
+      if (e.target && e.target.tagName === 'IMG') {
+        console.warn('Image failed to load:', e.target.src);
+        // If this is a slideshow image, skip to next after a short delay
+        if (e.target.id === 'imageB' && slideshowReady) {
+          setTimeout(() => {
+            if (imageB.style.opacity === '1') {
+              // If ImageB fails while visible, force next cycle
+              imageB.style.opacity = 0;
+              currentIndex = nextImageIndex;
+              nextImageIndex = (nextImageIndex + 1) % imageFiles.length;
+              imageB.src = slideshowFolder + imageFiles[nextImageIndex];
+              scheduleNext();
+            }
+          }, 500);
         }
-      }, true);
-      
-      // Ensure selfie and grad background also attempt to load
-      // (They are set directly in HTML)
-    })();
+      }
+    }, true);   
+  })();
   </script>
 </body>
 </html>
