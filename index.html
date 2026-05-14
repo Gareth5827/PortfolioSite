@@ -56,8 +56,8 @@
     /* ----- intro page sections (black background, full width) ----- */
     .intro-section {
       width: 100%;
-      min-height: 800px;
-      height: 800px;
+      min-height: 1000px;
+      height: 1000px;
       background-color: black;
       position: relative;
       overflow: hidden;
@@ -80,8 +80,8 @@
   
   /* Ensure sections have proper height for absolute positioning */
   .section1, .section2 {
-    min-height: 800px;
-    height: 800px;
+    min-height: 1000px;
+    height: 1000px;
     overflow: hidden;
   }
 
@@ -149,54 +149,57 @@
       background-color: #ffe600;
     }
 
-  /* Section 2: GradBG1 background + slideshow */
-  .section2 {
-    background-color: black;
-    position: relative;
-    display: block; /* Changed from flex to block for proper absolute positioning */
-  }
+    /* Section 2: GradBG1 background + slideshow */
+    .section2 {
+      background-color: black;
+      position: relative;
+      display: block;
+      min-height: 1000px;  /* 250 + 500 + 250 = 1000px */
+      height: 1000px;
+      overflow: hidden;
+    }
+    
+    .gradbg-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      display: block;
+    }
+    
+    .slideshow-container {
+      position: absolute;
+      z-index: 2;
+      width: 500px;
+      height: 500px;
+      left: 5%;
+      top: 250px;  /* 250px from the top */
+      background: transparent;
+    }
+    
+    .slideshow-img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 500px;
+      height: 500px;
+      object-fit: cover;
+      transition: opacity 1s ease-in-out;
+    }
   
-  .gradbg-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 0;
-    display: block; /* Ensure image displays as block */
-  }
-  
-  .slideshow-container {
-    position: absolute; /* Changed to absolute for proper layering */
-    z-index: 2;
-    width: 500px;
-    height: 500px;
-    left: 5%; /* Left side aligned */
-    top: 0; /* Align to top of section */
-    background: transparent;
-  }
-  
-  .slideshow-img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 500px;
-    height: 500px;
-    object-fit: cover;
-    transition: opacity 1s ease-in-out;
-  }
-  
-  /* FIXED: ImageA is BEHIND, ImageB is ON TOP for clean fade */
-  #imageA {
-    z-index: 1; /* Behind */
-    opacity: 1;
-  }
-  
-  #imageB {
-    z-index: 2; /* On top for fade effect */
-    opacity: 0;
-  }
+    /* FIXED: ImageA is BEHIND, ImageB is ON TOP for clean fade */
+    #imageA {
+      z-index: 1;
+      opacity: 1;
+    }
+    
+    #imageB {
+      z-index: 2;
+      opacity: 0;
+    }
 
     /* Section 3 */
     .section3 {
@@ -299,10 +302,7 @@
       // Function to discover images in the folder
       async function discoverImages() {
         const commonNames = [
-          "CDL2025", "Fancy7", "TeaCup", "Fancy1", "FireTruck", "GarethOnAir (1)", 
-          "Image1", "Image2", "Image3", "Image4",
-          "Image5", "Image6", "Image7", "Image8", "Image9", "Image10",
-          "photo1", "photo2", "photo3", "slide1", "slide2", "slide3"
+          "CDL2025", "Fancy7", "TeaCup", "Fancy1", "FireTruck", "GarethOnAir (1)"
         ];
         
         const extensions = ['.png', '.jpg', '.jpeg', '.PNG', '.JPG', '.JPEG'];
