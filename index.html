@@ -197,6 +197,71 @@
       opacity: 0;
     }
 
+    /* ----- Info Block Styles ----- */
+    .info-wrapper {
+      position: absolute;
+      z-index: 3;
+      left: calc(5% + 500px + 400px); /* Slideshow left (5%) + slideshow width (500px) + 400px gap */
+      top: 50%;
+      transform: translateY(-50%);
+      width: 700px;
+    }
+    
+    .curr-text-box {
+      width: 700px;
+      height: 700px;
+      background: rgba(0, 0, 0, 0.85);
+      border: 2px solid #EDF46E;
+      border-radius: 20px;
+      padding: 30px;
+      color: white;
+      font-family: Arial, sans-serif;
+      overflow-y: auto;
+      margin-bottom: 30px;
+    }
+    
+    .info-block {
+      font-size: 18pt;
+      line-height: 1.4;
+    }
+    
+    .info-block h3 {
+      font-size: 28pt;
+      margin-bottom: 20px;
+      color: #EDF46E;
+    }
+    
+    .button-row {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 100px;
+      width: 700px;
+    }
+    
+    .info-btn {
+      background-color: #EDF46E;
+      color: black;
+      border: none;
+      font-size: 18pt;
+      font-family: Arial, sans-serif;
+      font-weight: bold;
+      padding: 12px 35px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    
+    .info-btn:hover {
+      background-color: #e5ed4a;
+    }
+    
+    .info-btn.active {
+      background-color: #e5ed4a;
+      box-shadow: 0 0 15px rgba(237, 244, 110, 0.5);
+    }
+
   /* Section 3 */
   .section3 {
     width: 100%;
@@ -264,11 +329,36 @@
   </section>
 
   <!-- Section 2: GradBG1 + slideshow -->
-  <section class="intro-section section2">
-    <img src="Images/GradBG1.png" alt="Gradient Background" class="gradbg-image" id="gradBg">
-    <div class="slideshow-container">
-      <img id="imageA" class="slideshow-img" src="" alt="Slide A">
-      <img id="imageB" class="slideshow-img" src="" alt="Slide B">
+    <section class="intro-section section2">
+      <img src="Images/GradBG1.png" alt="Gradient Background" class="gradbg-image" id="gradBg">
+      <div class="slideshow-container">
+        <img id="imageA" class="slideshow-img" src="" alt="Slide A">
+        <img id="imageB" class="slideshow-img" src="" alt="Slide B">
+      </div>
+      <!-- Info section to the right of slideshow -->
+  <div class="info-wrapper">
+    <div class="curr-text-box" id="currTextBox">
+      <div class="info-block" id="infoBlockA">
+        <h3>About Me</h3>
+        <p>I'm Gareth Horne - a creative professional who brings energy, passion, and authenticity to everything I do. With a background in voice acting, esports, and content creation, I thrive on connecting with people and bringing ideas to life.</p>
+        <p style="margin-top: 20px;">My approach combines professional expertise with genuine enthusiasm, making every project not just successful, but memorable.</p>
+      </div>
+      <div class="info-block" id="infoBlockB" style="display: none;">
+        <h3>My Story</h3>
+        <p>From my early days experimenting with voices and characters to becoming a recognized talent in the industry, my journey has been driven by curiosity and a love for storytelling.</p>
+        <p style="margin-top: 20px;">Every project I take on adds a new chapter to my story, and I'm excited to see where the next opportunity leads.</p>
+      </div>
+      <div class="info-block" id="infoBlockC" style="display: none;">
+        <h3>My Goals</h3>
+        <p>I'm committed to pushing creative boundaries and exploring new frontiers in voice acting, esports, and digital content.</p>
+        <p style="margin-top: 20px;">My goal is to inspire others while continuously growing as an artist and professional. The best is yet to come!</p>
+      </div>
+    </div>
+    
+    <div class="button-row">
+      <button class="info-btn active" id="aboutButton" onclick="showInfo('A')">About</button>
+      <button class="info-btn" id="storyButton" onclick="showInfo('B')">Story</button>
+      <button class="info-btn" id="goalButton" onclick="showInfo('C')">Goals</button>
     </div>
   </section>
 
@@ -405,6 +495,39 @@
           scheduleNext();
         }, 1000);
       }
+
+          // ----- Info Block Toggle Logic -----
+    function showInfo(block) {
+      const blockA = document.getElementById('infoBlockA');
+      const blockB = document.getElementById('infoBlockB');
+      const blockC = document.getElementById('infoBlockC');
+      
+      const aboutBtn = document.getElementById('aboutButton');
+      const storyBtn = document.getElementById('storyButton');
+      const goalBtn = document.getElementById('goalButton');
+      
+      // Hide all blocks
+      blockA.style.display = 'none';
+      blockB.style.display = 'none';
+      blockC.style.display = 'none';
+      
+      // Remove active class from all buttons
+      aboutBtn.classList.remove('active');
+      storyBtn.classList.remove('active');
+      goalBtn.classList.remove('active');
+      
+      // Show selected block and activate button
+      if (block === 'A') {
+        blockA.style.display = 'block';
+        aboutBtn.classList.add('active');
+      } else if (block === 'B') {
+        blockB.style.display = 'block';
+        storyBtn.classList.add('active');
+      } else if (block === 'C') {
+        blockC.style.display = 'block';
+        goalBtn.classList.add('active');
+      }
+    }
       
       function scheduleNext() {
         if (timer) clearTimeout(timer);
