@@ -209,7 +209,7 @@
     
     .curr-text-box {
       width: 700px;
-      height: 700px;
+      height: 500px;
       background: rgba(0, 0, 0, 0.85);
       border: 2px solid #EDF46E;
       border-radius: 20px;
@@ -369,199 +369,188 @@
     </section>
   </div>
 
-    <script>
-    (function() {
-      // ----- SLIDESHOW LOGIC (Images from SlideshowImages folder) -----
-      const slideshowFolder = "Images/SlideshowImages/";
+<script>
+  // ----- Info Block Toggle Logic (moved to global scope) -----
+  function showInfo(block) {
+    const blockA = document.getElementById('infoBlockA');
+    const blockB = document.getElementById('infoBlockB');
+    const blockC = document.getElementById('infoBlockC');
+    
+    const aboutBtn = document.getElementById('aboutButton');
+    const storyBtn = document.getElementById('storyButton');
+    const goalBtn = document.getElementById('goalButton');
+    
+    // Check if elements exist
+    if (!blockA || !blockB || !blockC) return;
+    
+    // Hide all blocks
+    blockA.style.display = 'none';
+    blockB.style.display = 'none';
+    blockC.style.display = 'none';
+    
+    // Remove active class from all buttons
+    if (aboutBtn) aboutBtn.classList.remove('active');
+    if (storyBtn) storyBtn.classList.remove('active');
+    if (goalBtn) goalBtn.classList.remove('active');
+    
+    // Show selected block and activate button
+    if (block === 'A') {
+      blockA.style.display = 'block';
+      if (aboutBtn) aboutBtn.classList.add('active');
+    } else if (block === 'B') {
+      blockB.style.display = 'block';
+      if (storyBtn) storyBtn.classList.add('active');
+    } else if (block === 'C') {
+      blockC.style.display = 'block';
+      if (goalBtn) goalBtn.classList.add('active');
+    }
+  }
+
+  (function() {
+    // ----- SLIDESHOW LOGIC (Images from SlideshowImages folder) -----
+    const slideshowFolder = "Images/SlideshowImages/";
+    
+    const imageA = document.getElementById('imageA');
+    const imageB = document.getElementById('imageB');
+    
+    let imageFiles = [];
+    let currentIndex = 0;
+    let nextImageIndex = 1;
+    let timer = null;
+    let slideshowReady = false;
+    let isTransitioning = false;
+    
+    // Function to discover images in the folder
+    async function discoverImages() {
+      const commonNames = [
+        "CDL2025", "Fancy7", "TeaCup", "Fancy1", "FireTruck", "GarethOnAir (1)"
+      ];
       
-      const imageA = document.getElementById('imageA');
-      const imageB = document.getElementById('imageB');
+      const extensions = ['.png', '.jpg', '.jpeg', '.PNG', '.JPG', '.JPEG'];
+      const discoveredImages = [];
       
-      let imageFiles = [];
-      let currentIndex = 0;
-      let nextImageIndex = 1;
-      let timer = null;
-      let slideshowReady = false;
-      let isTransitioning = false; // Prevent overlapping transitions
-      
-      // Function to discover images in the folder
-      async function discoverImages() {
-        const commonNames = [
-          "CDL2025", "Fancy7", "TeaCup", "Fancy1", "FireTruck", "GarethOnAir (1)"
-        ];
-        
-        const extensions = ['.png', '.jpg', '.jpeg', '.PNG', '.JPG', '.JPEG'];
-        const discoveredImages = [];
-        
-        for (const name of commonNames) {
-          for (const ext of extensions) {
-            const imagePath = slideshowFolder + name + ext;
-            const exists = await checkImageExists(imagePath);
-            if (exists && !discoveredImages.includes(name + ext)) {
-              discoveredImages.push(name + ext);
-              break;
-            }
+      for (const name of commonNames) {
+        for (const ext of extensions) {
+          const imagePath = slideshowFolder + name + ext;
+          const exists = await checkImageExists(imagePath);
+          if (exists && !discoveredImages.includes(name + ext)) {
+            discoveredImages.push(name + ext);
+            break;
           }
         }
-        
-        if (discoveredImages.length > 0) {
-          imageFiles = discoveredImages.sort();
-          console.log('Discovered slideshow images:', imageFiles);
-        } else {
-          console.warn('No images found, using defaults');
-          imageFiles = ["Image1.png", "Image2.png", "Image3.png", "Image4.png"];
-        }
-        
-        initializeSlideshow();
       }
       
-      function checkImageExists(url) {
-        return new Promise((resolve) => {
-          const img = new Image();
-          img.onload = () => resolve(true);
-          img.onerror = () => resolve(false);
-          img.src = url;
-        });
+      if (discoveredImages.length > 0) {
+        imageFiles = discoveredImages.sort();
+        console.log('Discovered slideshow images:', imageFiles);
+      } else {
+        console.warn('No images found, using defaults');
+        imageFiles = ["Image1.png", "Image2.png", "Image3.png", "Image4.png"];
       }
       
+      initializeSlideshow();
+    }
+    
+    function checkImageExists(url) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = url;
+      });
+    }
+    
     function initializeSlideshow() {
       if (!imageA || !imageB || imageFiles.length === 0) return;
       
-      // Set initial state
       imageA.src = slideshowFolder + imageFiles[0];
       imageA.style.opacity = '1';
       imageA.style.zIndex = '1';
-      imageA.style.display = 'block'; // Show ImageA
+      imageA.style.display = 'block';
       
       imageB.style.opacity = '0';
       imageB.style.zIndex = '2';
       imageB.style.transition = 'none';
-      imageB.style.display = 'block'; // Show ImageB (but hidden with opacity)
+      imageB.style.display = 'block';
       
       currentIndex = 0;
       nextImageIndex = imageFiles.length > 1 ? 1 : 0;
       
       if (imageFiles.length > 1) {
-        // Preload next image
         imageB.src = slideshowFolder + imageFiles[nextImageIndex];
         slideshowReady = true;
         
-        // Restore transition after setup
         setTimeout(() => {
           imageB.style.transition = 'opacity 1s ease-in-out';
           scheduleNext();
         }, 100);
       }
     }
+    
+    function fadeToNext() {
+      if (!imageA || !imageB || !slideshowReady || imageFiles.length <= 1) return;
+      if (isTransitioning) return;
       
-      function fadeToNext() {
-        if (!imageA || !imageB || !slideshowReady || imageFiles.length <= 1) return;
-        if (isTransitioning) return; // Prevent overlapping transitions
+      isTransitioning = true;
+      
+      imageB.style.transition = 'none';
+      imageB.style.opacity = '0';
+      
+      void imageB.offsetWidth;
+      
+      imageB.style.transition = 'opacity 1s ease-in-out';
+      imageB.style.opacity = '1';
+      
+      setTimeout(() => {
+        imageA.src = imageB.src;
+        imageA.style.opacity = '1';
         
-        isTransitioning = true;
-        
-        // ImageB is already loaded with next image from previous cycle
-        // Ensure it's hidden first
         imageB.style.transition = 'none';
         imageB.style.opacity = '0';
         
-        // Force reflow
-        void imageB.offsetWidth;
+        currentIndex = nextImageIndex;
+        nextImageIndex = (nextImageIndex + 1) % imageFiles.length;
         
-        // Now fade in with transition
-        imageB.style.transition = 'opacity 1s ease-in-out';
-        imageB.style.opacity = '1';
+        imageB.src = slideshowFolder + imageFiles[nextImageIndex];
         
-        // After fade completes
-        setTimeout(() => {
-          // Move ImageB content to ImageA (behind)
-          imageA.src = imageB.src;
-          imageA.style.opacity = '1';
-          
-          // Hide ImageB instantly (no transition)
-          imageB.style.transition = 'none';
-          imageB.style.opacity = '0';
-          
-          // Update indices
-          currentIndex = nextImageIndex;
-          nextImageIndex = (nextImageIndex + 1) % imageFiles.length;
-          
-          // Preload next image into hidden ImageB
-          imageB.src = slideshowFolder + imageFiles[nextImageIndex];
-          
-          isTransitioning = false;
-          
-          // Schedule next cycle
-          scheduleNext();
-        }, 1000);
-      }
-
-          // ----- Info Block Toggle Logic -----
-    function showInfo(block) {
-      const blockA = document.getElementById('infoBlockA');
-      const blockB = document.getElementById('infoBlockB');
-      const blockC = document.getElementById('infoBlockC');
-      
-      const aboutBtn = document.getElementById('aboutButton');
-      const storyBtn = document.getElementById('storyButton');
-      const goalBtn = document.getElementById('goalButton');
-      
-      // Hide all blocks
-      blockA.style.display = 'none';
-      blockB.style.display = 'none';
-      blockC.style.display = 'none';
-      
-      // Remove active class from all buttons
-      aboutBtn.classList.remove('active');
-      storyBtn.classList.remove('active');
-      goalBtn.classList.remove('active');
-      
-      // Show selected block and activate button
-      if (block === 'A') {
-        blockA.style.display = 'block';
-        aboutBtn.classList.add('active');
-      } else if (block === 'B') {
-        blockB.style.display = 'block';
-        storyBtn.classList.add('active');
-      } else if (block === 'C') {
-        blockC.style.display = 'block';
-        goalBtn.classList.add('active');
-      }
+        isTransitioning = false;
+        
+        scheduleNext();
+      }, 1000);
     }
+    
+    function scheduleNext() {
+      if (timer) clearTimeout(timer);
+      if (imageFiles.length <= 1) return;
       
-      function scheduleNext() {
-        if (timer) clearTimeout(timer);
-        if (imageFiles.length <= 1) return;
-        
-        timer = setTimeout(() => {
-          fadeToNext();
-        }, 6000);
-      }
-      
-      // Start image discovery
-      discoverImages();
-      
-      // Handle image loading errors
-      window.addEventListener('error', function(e) {
-        if (e.target && e.target.tagName === 'IMG') {
-          console.warn('Image failed to load:', e.target.src);
-          if ((e.target.id === 'imageA' || e.target.id === 'imageB') && slideshowReady) {
-            setTimeout(() => {
-              // Skip to next image on error
-              if (imageFiles.length > 1) {
-                currentIndex = (currentIndex + 1) % imageFiles.length;
-                nextImageIndex = (currentIndex + 1) % imageFiles.length;
-                imageA.src = slideshowFolder + imageFiles[currentIndex];
-                imageB.src = slideshowFolder + imageFiles[nextImageIndex];
-                imageB.style.opacity = '0';
-                scheduleNext();
-              }
-            }, 500);
-          }
+      timer = setTimeout(() => {
+        fadeToNext();
+      }, 6000);
+    }
+    
+    // Start image discovery
+    discoverImages();
+    
+    // Handle image loading errors
+    window.addEventListener('error', function(e) {
+      if (e.target && e.target.tagName === 'IMG') {
+        console.warn('Image failed to load:', e.target.src);
+        if ((e.target.id === 'imageA' || e.target.id === 'imageB') && slideshowReady) {
+          setTimeout(() => {
+            if (imageFiles.length > 1) {
+              currentIndex = (currentIndex + 1) % imageFiles.length;
+              nextImageIndex = (currentIndex + 1) % imageFiles.length;
+              imageA.src = slideshowFolder + imageFiles[currentIndex];
+              imageB.src = slideshowFolder + imageFiles[nextImageIndex];
+              imageB.style.opacity = '0';
+              scheduleNext();
+            }
+          }, 500);
         }
-      }, true);
-      
-    })();
-  </script>
+      }
+    }, true);
+    
+  })();
+</script>
 </body>
 </html>
