@@ -299,18 +299,24 @@
   }
 
   .big-text {
-    font-size: 50pt;
+    font-size: 36pt;  /* Reduced from 50pt */
     font-weight: 400;
     line-height: 1.1;
-    font-family: 'Tektur', Arial, sans-serif;  /* Added Tektur */
+    font-family: 'Tektur', Arial, sans-serif;
+  }
+  
+  .big-text strong {
+    font-weight: 700;  /* Bold for WHOLE */
   }
   
   .email-text {
-    font-size: 50pt;
+    font-size: 36pt;  /* Reduced from 50pt */
     font-weight: 400;
     margin-top: 10px;
     word-break: break-word;
-    font-family: 'Tektur', Arial, sans-serif;  /* Added Tektur */
+    font-family: 'Tektur', Arial, sans-serif;
+    color: #68aa55;  /* Green color */
+    text-decoration: underline;  /* Underlined */
   }
 
     /* Responsive fallback for very small screens */
@@ -385,8 +391,8 @@
 
     <!-- Section 3: big text -->
     <section class="intro-section section3">
-      <div class="big-text">Games • Voices • Esports • The WHOLE Shebang</div>
-      <div class="email-text">Gareth_Horne@Outlook.com</div>
+    <div class="big-text">Games • Voices • Esports • The <strong>WHOLE</strong> Shebang</div>
+    <div class="email-text">Gareth_Horne@Outlook.com</div>
     </section>
   </div>
 
