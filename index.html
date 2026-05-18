@@ -11,6 +11,21 @@
       box-sizing: border-box;
     }
 
+        /* ----- Tektur Font ----- */
+    @font-face {
+      font-family: 'Tektur';
+      src: url('fonts/Tektur/Tektur-Regular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+    }
+    
+    @font-face {
+      font-family: 'Tektur';
+      src: url('fonts/Tektur/Tektur-Bold.ttf') format('truetype');
+      font-weight: 700;
+      font-style: normal;
+    }
+
     body {
       font-family: Arial, sans-serif;
       background: black;
@@ -34,9 +49,9 @@
 
   .main-header a {
     text-decoration: none;
-    color: white;  /* Changed from black to white for contrast */
+    color: white;
     font-size: 50pt;
-    font-family: Arial, sans-serif;
+    font-family: 'Tektur', Arial, sans-serif;  /* Added Tektur */
     font-weight: 400;
     line-height: 1;
     display: inline-block;
@@ -283,18 +298,20 @@
     gap: 15px;
   }
 
-    .big-text {
-      font-size: 50pt;
-      font-weight: 400;
-      line-height: 1.1;
-    }
-
-    .email-text {
-      font-size: 50pt;
-      font-weight: 400;
-      margin-top: 10px;
-      word-break: break-word;
-    }
+  .big-text {
+    font-size: 50pt;
+    font-weight: 400;
+    line-height: 1.1;
+    font-family: 'Tektur', Arial, sans-serif;  /* Added Tektur */
+  }
+  
+  .email-text {
+    font-size: 50pt;
+    font-weight: 400;
+    margin-top: 10px;
+    word-break: break-word;
+    font-family: 'Tektur', Arial, sans-serif;  /* Added Tektur */
+  }
 
     /* Responsive fallback for very small screens */
     @media (max-width: 1000px) {
