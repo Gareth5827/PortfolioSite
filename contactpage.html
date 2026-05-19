@@ -79,12 +79,12 @@
     }
 
     .page-content {
-      padding-top: 100px;
+      padding-top: 100px;  /* Keep this for header clearance */
       position: relative;
       width: 100%;
       min-height: calc(100vh - 100px);
       display: flex;
-      align-items: center;
+      align-items: flex-start;  /* Changed from center to flex-start */
       justify-content: center;
     }
 
@@ -112,14 +112,16 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 20px;
+      padding: 10px 20px;  /* Reduced top padding from 20px to 10px */
+      margin-top: 0;  /* Remove any top margin */
     }
 
     .contact-text {
-      font-size: 64pt;  /* Increased from 48pt */
+      font-size: 64pt;
       font-family: 'Pencil', Arial, sans-serif;
       color: white;
       margin-bottom: 20px;
+      margin-top: 10px;  /* Reduced space from top */
       text-align: center;
     }
 
@@ -133,10 +135,11 @@
     
     .form-fields {
       display: flex;
-      flex-wrap: nowrap;  /* Changed from wrap to nowrap to keep on same line */
+      flex-wrap: nowrap;
       justify-content: center;
       gap: 30px;
-      width: 450px;
+      width: 100%;  /* Changed from 450px to 100% */
+      max-width: 485 px;  /* 640 + 30 + 640 = 1310px */
       margin-bottom: 30px;
     }
 
@@ -339,8 +342,8 @@
         }
         
         // Check character limit
-        if (messageValue.length > 500) {
-          alert("Message is too long! Please keep it under 500 characters.");
+        if (messageValue.length > 600) {
+          alert("Message is too long! Please keep it under 600 characters.");
           return;
         }
         
