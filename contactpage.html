@@ -36,6 +36,8 @@
       font-family: 'Pencil', Arial, sans-serif;
       background: black;
       overflow-x: hidden;
+      margin: 0;
+      padding: 0;
     }
 
     .main-header {
@@ -69,28 +71,134 @@
 
     .page-content {
       padding-top: 100px;
-    }
-
-    .page-section {
+      position: relative;
       width: 100%;
       min-height: calc(100vh - 100px);
-      background-color: black;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
-      font-family: 'Pencil', Arial, sans-serif;
-      font-size: 40pt;
-      text-align: center;
-      padding: 40px;
     }
 
-    .email-link {
-      color: #68aa55;
-      text-decoration: underline;
-      font-size: 36pt;
-      margin-top: 20px;
-      display: block;
+    /* Background image */
+    .contact-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.75;
+      transition: opacity 0.6s ease;
+      z-index: 0;
+    }
+
+    .contact-bg.typing {
+      opacity: 0.85;
+      transition: opacity 0.2s ease;
+    }
+
+    .contact-form-container {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .contact-text {
+      font-size: 48pt;
+      font-family: 'Pencil', Arial, sans-serif;
+      color: white;
+      margin-bottom: 50px;
+      text-align: center;
+    }
+
+    .oneliner-text {
+      font-size: 34pt;
+      font-family: 'Pencil', Arial, sans-serif;
+      color: white;
+      margin-bottom: 450px;
+      text-align: center;
+    }
+
+    .form-fields {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      width: 450px;
+      margin-bottom: 30px;
+    }
+
+    .input-field {
+      background-color: #edf46e;
+      border: 4px solid #aaf46e;
+      border-radius: 15px;
+      padding: 10px 15px;
+      font-family: 'Pencil', Arial, sans-serif;
+      font-size: 24pt;
+      color: black;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+
+    .input-field:focus {
+      border-color: #8cd46e;
+    }
+
+    .input-field::placeholder {
+      color: #3f79c0;
+      opacity: 0.8;
+      font-size: 24pt;
+      font-family: 'Pencil', Arial, sans-serif;
+    }
+
+    #emailBox {
+      width: 210px;
+      height: 50px;
+    }
+
+    #subjectBox {
+      width: 210px;
+      height: 50px;
+    }
+
+    #messageBox {
+      width: 450px;
+      height: 600px;
+      resize: none;
+    }
+
+    .send-btn {
+      background-color: #edf46e;
+      color: black;
+      border: none;
+      font-size: 24pt;
+      font-family: 'Pencil', Arial, sans-serif;
+      font-weight: bold;
+      padding: 15px 50px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin-top: 30px;
+    }
+
+    .send-btn:hover {
+      background-color: #e5ed4a;
+    }
+
+    .char-count {
+      color: white;
+      font-family: 'Pencil', Arial, sans-serif;
+      font-size: 18pt;
+      margin-top: 10px;
+      text-align: right;
+      width: 450px;
+    }
+
+    .char-count.over-limit {
+      color: #ff6b6b;
     }
   </style>
 </head>
@@ -104,13 +212,143 @@
   </header>
 
   <div class="page-content">
-    <section class="page-section">
-      <div>
-        <h1>Contact</h1>
-        <p style="font-size: 24pt; margin-top: 20px;">Get in touch!</p>
-        <a href="mailto:Gareth_Horne@Outlook.com" class="email-link">Gareth_Horne@Outlook.com</a>
+    <img src="Images/ContactBG.png" alt="Contact Background" class="contact-bg" id="contactBg">
+    
+    <div class="contact-form-container">
+      <div class="contact-text">Contact</div>
+      <div class="oneliner-text">Don't be formal, be yourself. Talk soon!</div>
+      
+      <div class="form-fields">
+        <input type="email" class="input-field" id="emailBox" placeholder="Yourname@email.com">
+        <input type="text" class="input-field" id="subjectBox" placeholder="Yo!">
       </div>
-    </section>
+      
+      <textarea class="input-field" id="messageBox" placeholder="Yo Gareth!&#10;I wanted to shoot you a message to say what's up and I love your ideas!" maxlength="500"></textarea>
+      
+      <div class="char-count" id="charCount">0 / 500</div>
+      
+      <button class="send-btn" id="sendButton">Send!</button>
+    </div>
   </div>
+
+  <script>
+    (function() {
+      // ----- Sample Data -----
+      const sampleEmails = [
+        "Yourname@email.com",
+        "AwesomeEmail@Site.com",
+        "Something@Something.Something"
+      ];
+      
+      const sampleSubjects = [
+        "Yo!",
+        "I wanna talk business",
+        "Can you help with my game?",
+        "love your stuff man!",
+        "wanna cast for our event"
+      ];
+      
+      const sampleMessages = [
+        "Yo Gareth!\nI wanted to shoot you a message to say what's up and I love your ideas!",
+        "Hello Gareth,\nI wanted to ask you about your Esports casting. My team and I are running an event and we would like you to be on the broadcast.\nAll the best,\nName",
+        "Hey man!\nCan we do a Zoom or Teams call and talk about games?\nCheers,\nName"
+      ];
+      
+      // ----- Random Selection -----
+      function getRandomItem(arr) {
+        return arr[Math.floor(Math.random() * arr.length)];
+      }
+      
+      // ----- DOM Elements -----
+      const emailBox = document.getElementById('emailBox');
+      const subjectBox = document.getElementById('subjectBox');
+      const messageBox = document.getElementById('messageBox');
+      const sendButton = document.getElementById('sendButton');
+      const contactBg = document.getElementById('contactBg');
+      const charCount = document.getElementById('charCount');
+      
+      // ----- Set Initial Placeholders -----
+      const initialEmail = getRandomItem(sampleEmails);
+      const initialSubject = getRandomItem(sampleSubjects);
+      const initialMessage = getRandomItem(sampleMessages);
+      
+      emailBox.placeholder = initialEmail;
+      subjectBox.placeholder = initialSubject;
+      messageBox.placeholder = initialMessage;
+      
+      // ----- Character Counter -----
+      function updateCharCount() {
+        const length = messageBox.value.length;
+        const maxLength = 500;
+        charCount.textContent = length + " / " + maxLength;
+        
+        if (length > maxLength) {
+          charCount.classList.add('over-limit');
+        } else {
+          charCount.classList.remove('over-limit');
+        }
+      }
+      
+      messageBox.addEventListener('input', updateCharCount);
+      
+      // ----- Background Opacity on Typing -----
+      let typingTimeout;
+      
+      function setTypingBackground() {
+        contactBg.classList.add('typing');
+        
+        clearTimeout(typingTimeout);
+        typingTimeout = setTimeout(() => {
+          contactBg.classList.remove('typing');
+        }, 200);
+      }
+      
+      emailBox.addEventListener('input', setTypingBackground);
+      subjectBox.addEventListener('input', setTypingBackground);
+      messageBox.addEventListener('input', setTypingBackground);
+      
+      // ----- Send Button Logic -----
+      sendButton.addEventListener('click', function() {
+        const emailValue = emailBox.value.trim();
+        const subjectValue = subjectBox.value.trim();
+        const messageValue = messageBox.value.trim();
+        
+        // Check if fields are empty
+        if (!emailValue || emailValue === initialEmail) {
+          alert("Please fill out the email field!");
+          return;
+        }
+        
+        if (!subjectValue || subjectValue === initialSubject) {
+          alert("Please fill out the subject field!");
+          return;
+        }
+        
+        if (!messageValue || messageValue === initialMessage) {
+          alert("Please fill out the message field!");
+          return;
+        }
+        
+        // Check character limit
+        if (messageValue.length > 500) {
+          alert("Message is too long! Please keep it under 500 characters.");
+          return;
+        }
+        
+        // If all checks pass
+        alert("Message sent successfully! (This is a demo - no actual email was sent)");
+        
+        // Clear fields
+        emailBox.value = "";
+        subjectBox.value = "";
+        messageBox.value = "";
+        updateCharCount();
+      });
+      
+      // Initialize character count
+      updateCharCount();
+      
+    })();
+  </script>
 </body>
 </html>
