@@ -11,16 +11,17 @@
       box-sizing: border-box;
     }
 
+    /* ----- Tektur Font ----- */
     @font-face {
       font-family: 'Tektur';
-      src: url('fonts/Tektur/Tektur-Regular.ttf') format('truetype');
+      src: url('./fonts/tektur/Tektur-Regular.ttf') format('truetype');
       font-weight: 400;
       font-style: normal;
     }
     
     @font-face {
       font-family: 'Tektur';
-      src: url('fonts/Tektur/Tektur-Bold.ttf') format('truetype');
+      src: url('./fonts/tektur/Tektur-Bold.ttf') format('truetype');
       font-weight: 700;
       font-style: normal;
     }
@@ -28,6 +29,14 @@
     @font-face {
       font-family: 'Pencil';
       src: url('fonts/pencil_2/Pencil-Regular.ttf') format('truetype');
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    /* ----- Handwriting Font ----- */
+    @font-face {
+      font-family: 'HW';
+      src: url('fonts/handwriting_3/Handwriting.ttf') format('truetype');
       font-weight: 400;
       font-style: normal;
     }
@@ -87,11 +96,11 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      opacity: 0.75;
+      opacity: 0.60;  /* Changed from 0.75 to 0.60 */
       transition: opacity 0.6s ease;
       z-index: 0;
     }
-
+    
     .contact-bg.typing {
       opacity: 0.85;
       transition: opacity 0.2s ease;
@@ -107,7 +116,7 @@
     }
 
     .contact-text {
-      font-size: 48pt;
+      font-size: 64pt;  /* Increased from 48pt */
       font-family: 'Pencil', Arial, sans-serif;
       color: white;
       margin-bottom: 50px;
@@ -118,13 +127,13 @@
       font-size: 34pt;
       font-family: 'Pencil', Arial, sans-serif;
       color: white;
-      margin-bottom: 150px;
+      margin-bottom: 100px;  /* Reduced from 150px */
       text-align: center;
     }
-
+    
     .form-fields {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;  /* Changed from wrap to nowrap to keep on same line */
       justify-content: center;
       gap: 30px;
       width: 450px;
@@ -133,10 +142,10 @@
 
     .input-field {
       background-color: #edf46e;
-      border: 7px solid #aaf46e;
+      border: 4px solid #aaf46e;  /* Changed from 7px to 4px */
       border-radius: 15px;
       padding: 10px 15px;
-      font-family: 'Pencil', Arial, sans-serif;
+      font-family: 'HW', Arial, sans-serif;  /* Changed to HW font */
       font-size: 24pt;
       color: black;
       outline: none;
@@ -151,7 +160,7 @@
       color: #3f79c0;
       opacity: 0.8;
       font-size: 24pt;
-      font-family: 'Pencil', Arial, sans-serif;
+      font-family: 'HW', Arial, sans-serif;  /* Changed to HW font */
     }
 
     #emailBox {
@@ -175,7 +184,7 @@
       color: black;
       border: none;
       font-size: 24pt;
-      font-family: 'Pencil', Arial, sans-serif;
+      font-family: 'HW', Arial, sans-serif;  /* Changed to HW font */
       font-weight: bold;
       padding: 15px 50px;
       border-radius: 50px;
@@ -190,7 +199,7 @@
 
     .char-count {
       color: white;
-      font-family: 'Pencil', Arial, sans-serif;
+      font-family: 'HW', Arial, sans-serif;  /* Changed to HW font */
       font-size: 18pt;
       margin-top: 10px;
       text-align: right;
