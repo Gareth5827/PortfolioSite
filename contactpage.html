@@ -229,17 +229,21 @@
     <div class="contact-form-container">
       <div class="contact-text">Contact</div>
       <div class="oneliner-text">Don't be formal, be yourself. Talk soon!</div>
-      
-      <div class="form-fields">
-        <input type="email" class="input-field" id="emailBox" placeholder="Yourname@email.com">
-        <input type="text" class="input-field" id="subjectBox" placeholder="Yo!">
-      </div>
-      
-      <textarea class="input-field" id="messageBox" placeholder="Yo Gareth!&#10;I wanted to shoot you a message to say what's up and I love your ideas!" maxlength="600"></textarea>
-      
-      <div class="char-count" id="charCount">0 / 600</div>
-      
-      <button class="send-btn" id="sendButton">Send!</button>
+        <form action="https://formsubmit.co/Gareth_Horne@Outlook.com" method="POST" id="contactForm">
+          <div class="form-fields">
+            <input type="email" class="input-field" id="emailBox" name="email" placeholder="Yourname@email.com" required>
+            <input type="text" class="input-field" id="subjectBox" name="subject" placeholder="Yo!" required>
+          </div>
+          
+          <textarea class="input-field" id="messageBox" name="message" placeholder="Yo Gareth!&#10;I wanted to shoot you a message to say what's up and I love your ideas!" maxlength="600" required></textarea>
+          
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="table">
+          
+          <div class="char-count" id="charCount">0 / 600</div>
+          
+          <button type="submit" class="send-btn" id="sendButton">Send!</button>
+  </form>
     </div>
   </div>
 
@@ -291,7 +295,7 @@
       // ----- Character Counter -----
       function updateCharCount() {
         const length = messageBox.value.length;
-        const maxLength = 500;
+        const maxLength = 600;
         charCount.textContent = length + " / " + maxLength;
         
         if (length > maxLength) {
@@ -319,42 +323,43 @@
       subjectBox.addEventListener('input', setTypingBackground);
       messageBox.addEventListener('input', setTypingBackground);
       
-      // ----- Send Button Logic -----
-      sendButton.addEventListener('click', function() {
+      // ----- Form Submit Logic -----
+      const contactForm = document.getElementById('contactForm');
+      
+      contactForm.addEventListener('submit', function(e) {
         const emailValue = emailBox.value.trim();
         const subjectValue = subjectBox.value.trim();
         const messageValue = messageBox.value.trim();
         
         // Check if fields are empty
         if (!emailValue || emailValue === initialEmail) {
+          e.preventDefault();
           alert("Please fill out the email field!");
           return;
         }
         
         if (!subjectValue || subjectValue === initialSubject) {
+          e.preventDefault();
           alert("Please fill out the subject field!");
           return;
         }
         
         if (!messageValue || messageValue === initialMessage) {
+          e.preventDefault();
           alert("Please fill out the message field!");
           return;
         }
         
         // Check character limit
         if (messageValue.length > 600) {
+          e.preventDefault();
           alert("Message is too long! Please keep it under 600 characters.");
           return;
         }
         
-        // If all checks pass
-        alert("Message sent successfully! (This is a demo - no actual email was sent)");
-        
-        // Clear fields
-        emailBox.value = "";
-        subjectBox.value = "";
-        messageBox.value = "";
-        updateCharCount();
+        // If all checks pass, form will submit
+        sendButton.textContent = "Sending...";
+        sendButton.disabled = true;
       });
       
       // Initialize character count
