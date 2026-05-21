@@ -187,13 +187,17 @@
       color: black;
       border: none;
       font-size: 24pt;
-      font-family: 'HW', Arial, sans-serif;  /* Changed to HW font */
+      font-family: 'HW', Arial, sans-serif;
       font-weight: bold;
       padding: 15px 50px;
       border-radius: 50px;
       cursor: pointer;
       transition: background 0.2s;
       margin-top: 20px;
+      margin-left: auto;  /* This pushes it to the right */
+      margin-right: auto;  /* This centers it if container is wider */
+      display: block;
+      width: fit-content;
     }
 
     .send-btn:hover {
