@@ -206,11 +206,13 @@
 
     .char-count {
       color: white;
-      font-family: 'HW', Arial, sans-serif;  /* Changed to HW font */
+      font-family: 'HW', Arial, sans-serif;
       font-size: 18pt;
       margin-top: 10px;
-      text-align: right;
-      width: 450px;
+      margin-left: auto;  /* This pushes it to the right */
+      margin-right: auto;  /* This centers it if container is wider */
+      display: block;
+      width: fit-content;
     }
 
     .char-count.over-limit {
