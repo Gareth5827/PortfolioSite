@@ -14,14 +14,14 @@
 
     @font-face {
       font-family: 'Tektur';
-      src: url('fonts/Tektur/Tektur-Regular.ttf') format('truetype');
+      src: url('fonts/tektur/Tektur-Regular.ttf') format('truetype');
       font-weight: 400;
       font-style: normal;
     }
     
     @font-face {
       font-family: 'Tektur';
-      src: url('fonts/Tektur/Tektur-Bold.ttf') format('truetype');
+      src: url('fonts/tektur/Tektur-Bold.ttf') format('truetype');
       font-weight: 700;
       font-style: normal;
     }
@@ -136,8 +136,8 @@
       display: flex;
       align-items: center;
       position: relative;
-      border: 15px solid rgba(255, 255, 255, 0.75);
-      background: black;
+      border: 15px solid rgba(255, 255, 255, 0.45);  /* Changed from 0.75 to 0.45 */
+      background: rgba(255, 255, 255, 0.20);  /* White with 20% opacity */
     }
 
     .mini-segment.normal {
@@ -188,6 +188,32 @@
 
     .mini-segment.inverted .text-box {
       margin-right: 350px;
+    }
+
+        /* ----- Inverted Style Scrollbar ----- */
+    ::-webkit-scrollbar {
+      width: 14px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: white;
+      border-radius: 10px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: black;
+      border-radius: 10px;
+      border: 2px solid white;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: #333;
+    }
+    
+    /* For Firefox */
+    * {
+      scrollbar-width: thin;
+      scrollbar-color: black white;
     }
 
     .hidden {
