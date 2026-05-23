@@ -26,14 +26,14 @@
     }
 
     @font-face {
-      font-family: 'Pencil';
-      src: url('fonts/pencil_2/Pencil-Regular.ttf') format('truetype');
+      font-family: 'HW';
+      src: url('fonts/handwriting_3/Handwriting.ttf') format('truetype');
       font-weight: 400;
       font-style: normal;
     }
 
     body {
-      font-family: 'Pencil', Arial, sans-serif;
+      font-family: 'HW', Arial, sans-serif;
       background: black;
       overflow-x: hidden;
     }
@@ -55,7 +55,7 @@
     .main-header a {
       text-decoration: none;
       color: white;
-      font-size: 50pt;
+      font-size: 42pt;
       font-family: 'Tektur', Arial, sans-serif;
       font-weight: 400;
       line-height: 1;
@@ -69,20 +69,116 @@
 
     .page-content {
       padding-top: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .page-section {
+    /* ----- Blurb Box ----- */
+    .blurb-box {
+      max-width: 600px;
+      max-height: 1200px;
+      font-family: 'HW', Arial, sans-serif;
+      font-size: 34pt;
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+      line-height: 1.3;
+      overflow-y: auto;
+    }
+
+    /* ----- Swap Button ----- */
+    .swap-btn {
+      background-color: #EDF46E;
+      color: black;
+      border: none;
+      font-size: 28pt;
+      font-family: 'HW', Arial, sans-serif;
+      font-weight: bold;
+      padding: 15px 60px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      margin-top: 250px;
+      margin-bottom: 50px;
+    }
+
+    .swap-btn:hover {
+      background-color: #E5AD4A;
+    }
+
+    /* ----- Content Container ----- */
+    .content-container {
       width: 100%;
-      min-height: calc(100vh - 100px);
-      background-color: black;
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+      padding-bottom: 50px;
+    }
+
+    /* ----- Mini Segment ----- */
+    .mini-segment {
+      width: 100%;
+      height: 550px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      color: white;
-      font-family: 'Pencil', Arial, sans-serif;
-      font-size: 40pt;
-      text-align: center;
-      padding: 40px;
+      position: relative;
+      border: 15px solid rgba(255, 255, 255, 0.75);
+      background: black;
+    }
+
+    .mini-segment.normal {
+      flex-direction: row;
+    }
+
+    .mini-segment.inverted {
+      flex-direction: row-reverse;
+    }
+
+    .image-box {
+      width: 500px;
+      height: 500px;
+      background: #333;
+      flex-shrink: 0;
+    }
+
+    .image-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .mini-segment.normal .image-box {
+      margin-left: 50px;
+    }
+
+    .mini-segment.inverted .image-box {
+      margin-right: 50px;
+    }
+
+    .text-box {
+      width: 800px;
+      height: 500px;
+      font-family: 'HW', Arial, sans-serif;
+      font-size: 24pt;
+      color: black;
+      background: white;
+      padding: 30px;
+      overflow-y: auto;
+      display: flex;
+      align-items: center;
+    }
+
+    .mini-segment.normal .text-box {
+      margin-left: 350px;
+    }
+
+    .mini-segment.inverted .text-box {
+      margin-right: 350px;
+    }
+
+    .hidden {
+      display: none;
     }
   </style>
 </head>
@@ -96,12 +192,91 @@
   </header>
 
   <div class="page-content">
-    <section class="page-section">
-      <div>
-        <h1>Esports</h1>
-        <p style="font-size: 24pt; margin-top: 20px;">Coming soon!</p>
+    <!-- Blurb Box -->
+    <div class="blurb-box">
+      I bring high energy and a warm, approachable personality to every esports event and broadcast I'm part of. Whether it's casting, hosting, or interviewing, I thrive on creating memorable moments that connect with audiences and elevate the competitive experience.
+    </div>
+
+    <!-- Swap Button -->
+    <button class="swap-btn" id="swapButton" onclick="toggleContent()">Streams</button>
+
+    <!-- Index 1: Streams -->
+    <div class="content-container" id="index1">
+      <!-- Mini Segment 1 (Normal) -->
+      <div class="mini-segment normal">
+        <div class="image-box">
+          <img src="Images/SlideshowImages/CDL2025.png" alt="Stream 1">
+        </div>
+        <div class="text-box">
+          SampleText
+        </div>
       </div>
-    </section>
+
+      <!-- Mini Segment 2 (Inverted) -->
+      <div class="mini-segment inverted">
+        <div class="image-box">
+          <img src="Images/SlideshowImages/Fancy7.png" alt="Stream 2">
+        </div>
+        <div class="text-box">
+          SampleText
+        </div>
+      </div>
+
+      <!-- Mini Segment 3 (Normal) -->
+      <div class="mini-segment normal">
+        <div class="image-box">
+          <img src="Images/SlideshowImages/TeaCup.png" alt="Stream 3">
+        </div>
+        <div class="text-box">
+          SampleText
+        </div>
+      </div>
+    </div>
+
+    <!-- Index 2: Events (hidden by default) -->
+    <div class="content-container hidden" id="index2">
+      <!-- Mini Segment 1 (Normal) -->
+      <div class="mini-segment normal">
+        <div class="image-box">
+          <img src="Images/SlideshowImages/Fancy1.png" alt="Event 1">
+        </div>
+        <div class="text-box">
+          SampleText
+        </div>
+      </div>
+
+      <!-- Mini Segment 2 (Inverted) -->
+      <div class="mini-segment inverted">
+        <div class="image-box">
+          <img src="Images/SlideshowImages/FireTruck.png" alt="Event 2">
+        </div>
+        <div class="text-box">
+          SampleText
+        </div>
+      </div>
+    </div>
   </div>
+
+  <script>
+    let swapState = false;
+
+    function toggleContent() {
+      const swapButton = document.getElementById('swapButton');
+      const index1 = document.getElementById('index1');
+      const index2 = document.getElementById('index2');
+
+      swapState = !swapState;
+
+      if (swapState) {
+        swapButton.textContent = 'Events';
+        index1.classList.add('hidden');
+        index2.classList.remove('hidden');
+      } else {
+        swapButton.textContent = 'Streams';
+        index1.classList.remove('hidden');
+        index2.classList.add('hidden');
+      }
+    }
+  </script>
 </body>
 </html>
