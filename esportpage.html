@@ -190,30 +190,37 @@
       margin-right: 350px;
     }
 
-    /* ----- Invisible Track Scrollbar ----- */
+    /* ----- Custom Thin Scrollbar ----- */
     ::-webkit-scrollbar {
-      width: 14px;
+      width: 8px;  /* Thinner than default (usually 12-14px) */
     }
     
     ::-webkit-scrollbar-track {
-      background: transparent;  /* Makes the track invisible */
-      border-radius: 10px;
+      background: #d7289e;  /* Pink background */
+      border-radius: 4px;
     }
     
     ::-webkit-scrollbar-thumb {
-      background: linear-gradient(180deg, red, green, blue);  /* Inverted colors */
-      border-radius: 10px;
-      border: 2px solid transparent;  /* Changed from white to transparent */
+      background: #d72846;  /* Red thumb */
+      border-radius: 4px;
     }
     
     ::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(180deg, #ff3333, #33ff33, #3333ff);
+      background: #c01f3c;  /* Slightly darker red on hover */
+    }
+    
+    /* Up and down arrows */
+    ::-webkit-scrollbar-button {
+      display: block;  /* Show arrows */
+      background: #d76128;  /* Orange arrows */
+      height: 16px;
+      border-radius: 2px;
     }
     
     /* For Firefox */
     * {
       scrollbar-width: thin;
-      scrollbar-color: transparent transparent;  /* Makes Firefox scrollbar invisible */
+      scrollbar-color: #d72846 #d7289e;
     }
 
     .hidden {
