@@ -192,35 +192,45 @@
 
     /* ----- Custom Thin Scrollbar ----- */
     ::-webkit-scrollbar {
-      width: 8px;  /* Thinner than default (usually 12-14px) */
+      width: 8px !important;
     }
     
     ::-webkit-scrollbar-track {
-      background: #42bdaf;  /* Dark tiel background */
+      background: #42bdaf !important;  /* Teal background */
       border-radius: 4px;
     }
     
     ::-webkit-scrollbar-thumb {
-      background: #d72846;  /* Red thumb */
+      background: #d72846 !important;  /* Red thumb */
       border-radius: 4px;
     }
     
     ::-webkit-scrollbar-thumb:hover {
-      background: #c01f3c;  /* Slightly darker red on hover */
+      background: #c01f3c !important;
     }
     
     /* Up and down arrows */
     ::-webkit-scrollbar-button {
-      display: block;  /* Show arrows */
-      background: #d76128;  /* Orange arrows */
+      display: block !important;
+      background: #d76128 !important;  /* Orange arrows */
       height: 16px;
+      width: 8px;
       border-radius: 2px;
+    }
+    
+    /* Single direction arrows */
+    ::-webkit-scrollbar-button:vertical:decrement {
+      background: #d76128 !important;
+    }
+    
+    ::-webkit-scrollbar-button:vertical:increment {
+      background: #d76128 !important;
     }
     
     /* For Firefox */
     * {
       scrollbar-width: thin;
-      scrollbar-color: #d72846 #d7289e;
+      scrollbar-color: #d72846 #42bdaf;
     }
 
     .hidden {
