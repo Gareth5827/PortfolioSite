@@ -136,7 +136,7 @@
       display: flex;
       align-items: center;
       position: relative;
-      border: 15px solid rgba(255, 255, 255, 0.45);  /* Changed from 0.75 to 0.45 */
+      border: 8px solid rgba(255, 255, 255, 0.35);  /* Changed from 0.75 to 0.35 */
       background: rgba(255, 255, 255, 0.20);  /* White with 20% opacity */
     }
 
@@ -175,7 +175,7 @@
       font-family: 'HW', Arial, sans-serif;
       font-size: 24pt;
       color: white;  /* Changed to white for readability on dark background */
-      background: rgba(0, 0, 0, 0.25);  /* 25% opacity black background */
+      background: rgba(0, 0, 0, 0);  /* no bg needed */
       padding: 30px;
       overflow-y: auto;
       display: flex;
@@ -190,24 +190,24 @@
       margin-right: 350px;
     }
 
-        /* ----- Inverted Style Scrollbar ----- */
+    /* ----- Dynamic Inverted Scrollbar ----- */
     ::-webkit-scrollbar {
       width: 14px;
     }
     
     ::-webkit-scrollbar-track {
-      background: white;
+      background: linear-gradient(180deg, cyan, magenta, yellow);
       border-radius: 10px;
     }
     
     ::-webkit-scrollbar-thumb {
-      background: black;
+      background: linear-gradient(180deg, red, green, blue);  /* Inverted colors */
       border-radius: 10px;
-      border: 2px solid white;
+      border: 2px solid rgba(255, 255, 255, 0.5);
     }
     
     ::-webkit-scrollbar-thumb:hover {
-      background: #333;
+      background: linear-gradient(180deg, #ff3333, #33ff33, #3333ff);
     }
     
     /* For Firefox */
