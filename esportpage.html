@@ -190,6 +190,34 @@
       margin-right: 350px;
     }
 
+        /* ----- Mini Segment Slideshow ----- */
+    .segment-slideshow {
+      width: 500px;
+      height: 500px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    
+    .segment-slideshow img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 1s ease-in-out;
+    }
+    
+    .segment-slideshow .imgA {
+      z-index: 1;
+      opacity: 1;
+    }
+    
+    .segment-slideshow .imgB {
+      z-index: 2;
+      opacity: 0;
+    }
+
     /* ----- Custom Thin Scrollbar ----- */
     ::-webkit-scrollbar {
       width: 8px !important;
@@ -258,17 +286,18 @@
 
     <!-- Index 1: Streams -->
     <div class="content-container" id="index1">
-      <!-- Mini Segment 1 (Normal) -->
+      <!-- Mini Segment 1 (Normal) - Casting Slideshow -->
       <div class="mini-segment normal">
-        <div class="image-box">
-          <img src="Images/SlideshowImages/CDL2025.png" alt="Stream 1">
+        <div class="segment-slideshow" id="castingSlideshow">
+          <img class="imgA" src="" alt="Casting A">
+          <img class="imgB" src="" alt="Casting B">
         </div>
         <div class="text-box">
-          SampleText
+          Casting brings me to life. Whether it's play-by-play or colour commentary, I bring energy that keeps viewers on the edge of their seats.
         </div>
       </div>
-
-      <!-- Mini Segment 2 (Inverted) -->
+    
+      <!-- Mini Segment 2 (Inverted) - Static Image -->
       <div class="mini-segment inverted">
         <div class="image-box">
           <img src="Images/SlideshowImages/Fancy7.png" alt="Stream 2">
@@ -277,14 +306,15 @@
           SampleText
         </div>
       </div>
-
-      <!-- Mini Segment 3 (Normal) -->
+    
+      <!-- Mini Segment 3 (Normal) - Interviewing Slideshow -->
       <div class="mini-segment normal">
-        <div class="image-box">
-          <img src="Images/SlideshowImages/TeaCup.png" alt="Stream 3">
+        <div class="segment-slideshow" id="interviewingSlideshow">
+          <img class="imgA" src="" alt="Interview A">
+          <img class="imgB" src="" alt="Interview B">
         </div>
         <div class="text-box">
-          SampleText
+          Interviewing is where I connect with players and personalities on a human level, bringing out stories that fans love to hear.
         </div>
       </div>
     </div>
@@ -314,25 +344,153 @@
   </div>
 
   <script>
-    let swapState = false;
+  let swapState = false;
 
-    function toggleContent() {
-      const swapButton = document.getElementById('swapButton');
-      const index1 = document.getElementById('index1');
-      const index2 = document.getElementById('index2');
+  function toggleContent() {
+    const swapButton = document.getElementById('swapButton');
+    const index1 = document.getElementById('index1');
+    const index2 = document.getElementById('index2');
 
-      swapState = !swapState;
+    swapState = !swapState;
 
-      if (swapState) {
-        swapButton.textContent = 'Events';
-        index1.classList.add('hidden');
-        index2.classList.remove('hidden');
+    if (swapState) {
+      swapButton.textContent = 'Events';
+      index1.classList.add('hidden');
+      index2.classList.remove('hidden');
+    } else {
+      swapButton.textContent = 'Streams';
+      index1.classList.remove('hidden');
+      index2.classList.add('hidden');
+    }
+  }
+
+  // ----- Slideshow Factory -----
+  function createSlideshow(containerId, folderPath) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+    
+    const imgA = container.querySelector('.imgA');
+    const imgB = container.querySelector('.imgB');
+    if (!imgA || !imgB) return;
+    
+    let imageFiles = [];
+    let currentIndex = 0;
+    let nextImageIndex = 1;
+    let timer = null;
+    let isTransitioning = false;
+    
+    async function discoverImages() {
+      const commonNames = [
+        "Image1", "Image2", "Image3", "Image4", "Image5",
+        "CDL2025", "Fancy7", "TeaCup", "Fancy1", "FireTruck", "GarethOnAir (1)"
+      ];
+      
+      const extensions = ['.png'];
+      const discoveredImages = [];
+      
+      for (const name of commonNames) {
+        for (const ext of extensions) {
+          const imagePath = folderPath + name + ext;
+          const exists = await checkImageExists(imagePath);
+          if (exists && !discoveredImages.includes(name + ext)) {
+            discoveredImages.push(name + ext);
+            break;
+          }
+        }
+      }
+      
+      if (discoveredImages.length > 0) {
+        imageFiles = discoveredImages.sort();
+        console.log('Discovered images for ' + containerId + ':', imageFiles);
+        initializeSlideshow();
       } else {
-        swapButton.textContent = 'Streams';
-        index1.classList.remove('hidden');
-        index2.classList.add('hidden');
+        console.warn('No images found in ' + folderPath);
       }
     }
-  </script>
+    
+    function checkImageExists(url) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = url;
+      });
+    }
+    
+    function initializeSlideshow() {
+      if (imageFiles.length === 0) return;
+      
+      imgA.src = folderPath + imageFiles[0];
+      imgA.style.opacity = '1';
+      imgA.style.zIndex = '1';
+      imgA.style.display = 'block';
+      
+      imgB.style.opacity = '0';
+      imgB.style.zIndex = '2';
+      imgB.style.transition = 'none';
+      imgB.style.display = 'block';
+      
+      currentIndex = 0;
+      nextImageIndex = imageFiles.length > 1 ? 1 : 0;
+      
+      if (imageFiles.length > 1) {
+        imgB.src = folderPath + imageFiles[nextImageIndex];
+        
+        setTimeout(() => {
+          imgB.style.transition = 'opacity 1s ease-in-out';
+          scheduleNext();
+        }, 100);
+      }
+    }
+    
+    function fadeToNext() {
+      if (imageFiles.length <= 1 || isTransitioning) return;
+      
+      isTransitioning = true;
+      
+      imgB.style.transition = 'none';
+      imgB.style.opacity = '0';
+      
+      void imgB.offsetWidth;
+      
+      imgB.style.transition = 'opacity 1s ease-in-out';
+      imgB.style.opacity = '1';
+      
+      setTimeout(() => {
+        imgA.src = imgB.src;
+        imgA.style.opacity = '1';
+        
+        imgB.style.transition = 'none';
+        imgB.style.opacity = '0';
+        
+        currentIndex = nextImageIndex;
+        nextImageIndex = (nextImageIndex + 1) % imageFiles.length;
+        
+        imgB.src = folderPath + imageFiles[nextImageIndex];
+        
+        isTransitioning = false;
+        
+        scheduleNext();
+      }, 1000);
+    }
+    
+    function scheduleNext() {
+      if (timer) clearTimeout(timer);
+      if (imageFiles.length <= 1) return;
+      
+      timer = setTimeout(() => {
+        fadeToNext();
+      }, 6000);
+    }
+    
+    discoverImages();
+  }
+
+  // Initialize slideshows when page loads
+  window.addEventListener('DOMContentLoaded', function() {
+    createSlideshow('castingSlideshow', 'Images/CastingSeg/');
+    createSlideshow('interviewingSlideshow', 'Images/InterviewingSeg/');
+  });
+</script>
 </body>
 </html>
