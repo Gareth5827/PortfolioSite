@@ -174,25 +174,25 @@
       height: 500px;
       font-family: 'HW', Arial, sans-serif;
       font-size: 24pt;
-      color: white;  /* Changed to white for readability on dark background */
-      background: rgba(0, 0, 0, 0);  /* no bg needed */
+      color: white;
+      background: rgba(0, 0, 0, 0);
       padding: 30px;
       overflow-y: auto;
       display: flex;
       align-items: center;
     }
-
+    
     .mini-segment.normal .text-box {
-      margin-left: 350px;
+      margin-left: 250px;  /* Adjusted from 350px since image is wider */
     }
-
+    
     .mini-segment.inverted .text-box {
-      margin-right: 350px;
+      margin-right: 250px;  /* Adjusted from 350px since image is wider */
     }
 
-        /* ----- Mini Segment Slideshow ----- */
+    /* ----- Mini Segment Slideshow ----- */
     .segment-slideshow {
-      width: 500px;
+      width: 650px;  /* Changed from 500px */
       height: 500px;
       position: relative;
       flex-shrink: 0;
@@ -216,6 +216,13 @@
     .segment-slideshow .imgB {
       z-index: 2;
       opacity: 0;
+    }
+    
+    .image-box {
+      width: 650px;  /* Changed from 500px */
+      height: 500px;
+      background: #333;
+      flex-shrink: 0;
     }
 
     /* ----- Custom Thin Scrollbar ----- */
@@ -364,127 +371,146 @@
     }
   }
 
-  // ----- Slideshow Factory -----
-  function createSlideshow(containerId, folderPath) {
-    const container = document.getElementById(containerId);
-    if (!container) return;
-    
-    const imgA = container.querySelector('.imgA');
-    const imgB = container.querySelector('.imgB');
-    if (!imgA || !imgB) return;
-    
-    let imageFiles = [];
-    let currentIndex = 0;
-    let nextImageIndex = 1;
-    let timer = null;
-    let isTransitioning = false;
-    
-    async function discoverImages() {
-      const commonNames = [
-        "Image1", "Image2", "Image3", "Image4", "Image5",
-        "CDL2025", "Fancy7", "TeaCup", "Fancy1", "FireTruck", "GarethOnAir (1)"
-      ];
+    // ----- Slideshow Factory with Random Non-Repeating Selection -----
+    function createSlideshow(containerId, folderPath) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
       
-      const extensions = ['.png'];
-      const discoveredImages = [];
+      const imgA = container.querySelector('.imgA');
+      const imgB = container.querySelector('.imgB');
+      if (!imgA || !imgB) return;
       
-      for (const name of commonNames) {
-        for (const ext of extensions) {
-          const imagePath = folderPath + name + ext;
-          const exists = await checkImageExists(imagePath);
-          if (exists && !discoveredImages.includes(name + ext)) {
-            discoveredImages.push(name + ext);
-            break;
+      let imageFiles = [];
+      let lastIndex = -1;  // Track last shown image index
+      let timer = null;
+      let isTransitioning = false;
+      
+      async function discoverImages() {
+        const commonNames = [
+          "Image1", "Image2", "Image3", "Image4", "Image5",
+          "CDL2025", "Fancy7", "TeaCup", "Fancy1", "FireTruck", "GarethOnAir (1)"
+        ];
+        
+        const extensions = ['.png'];
+        const discoveredImages = [];
+        
+        for (const name of commonNames) {
+          for (const ext of extensions) {
+            const imagePath = folderPath + name + ext;
+            const exists = await checkImageExists(imagePath);
+            if (exists && !discoveredImages.includes(name + ext)) {
+              discoveredImages.push(name + ext);
+              break;
+            }
           }
+        }
+        
+        if (discoveredImages.length > 0) {
+          imageFiles = discoveredImages.sort();
+          console.log('Discovered images for ' + containerId + ':', imageFiles);
+          initializeSlideshow();
+        } else {
+          console.warn('No images found in ' + folderPath);
         }
       }
       
-      if (discoveredImages.length > 0) {
-        imageFiles = discoveredImages.sort();
-        console.log('Discovered images for ' + containerId + ':', imageFiles);
-        initializeSlideshow();
-      } else {
-        console.warn('No images found in ' + folderPath);
+      function checkImageExists(url) {
+        return new Promise((resolve) => {
+          const img = new Image();
+          img.onload = () => resolve(true);
+          img.onerror = () => resolve(false);
+          img.src = url;
+        });
       }
-    }
-    
-    function checkImageExists(url) {
-      return new Promise((resolve) => {
-        const img = new Image();
-        img.onload = () => resolve(true);
-        img.onerror = () => resolve(false);
-        img.src = url;
-      });
-    }
-    
-    function initializeSlideshow() {
-      if (imageFiles.length === 0) return;
       
-      imgA.src = folderPath + imageFiles[0];
-      imgA.style.opacity = '1';
-      imgA.style.zIndex = '1';
-      imgA.style.display = 'block';
-      
-      imgB.style.opacity = '0';
-      imgB.style.zIndex = '2';
-      imgB.style.transition = 'none';
-      imgB.style.display = 'block';
-      
-      currentIndex = 0;
-      nextImageIndex = imageFiles.length > 1 ? 1 : 0;
-      
-      if (imageFiles.length > 1) {
-        imgB.src = folderPath + imageFiles[nextImageIndex];
+      function getRandomIndex() {
+        if (imageFiles.length <= 1) return 0;
         
-        setTimeout(() => {
-          imgB.style.transition = 'opacity 1s ease-in-out';
-          scheduleNext();
-        }, 100);
+        // If there's only one image besides the last one, pick that
+        if (imageFiles.length === 2) {
+          return lastIndex === 0 ? 1 : 0;
+        }
+        
+        // Pick a random index that isn't the last one
+        let randomIndex;
+        do {
+          randomIndex = Math.floor(Math.random() * imageFiles.length);
+        } while (randomIndex === lastIndex && imageFiles.length > 1);
+        
+        return randomIndex;
       }
-    }
-    
-    function fadeToNext() {
-      if (imageFiles.length <= 1 || isTransitioning) return;
       
-      isTransitioning = true;
-      
-      imgB.style.transition = 'none';
-      imgB.style.opacity = '0';
-      
-      void imgB.offsetWidth;
-      
-      imgB.style.transition = 'opacity 1s ease-in-out';
-      imgB.style.opacity = '1';
-      
-      setTimeout(() => {
-        imgA.src = imgB.src;
+      function initializeSlideshow() {
+        if (imageFiles.length === 0) return;
+        
+        // Start with a random image
+        lastIndex = Math.floor(Math.random() * imageFiles.length);
+        
+        imgA.src = folderPath + imageFiles[lastIndex];
         imgA.style.opacity = '1';
+        imgA.style.zIndex = '1';
+        imgA.style.display = 'block';
+        
+        imgB.style.opacity = '0';
+        imgB.style.zIndex = '2';
+        imgB.style.transition = 'none';
+        imgB.style.display = 'block';
+        
+        if (imageFiles.length > 1) {
+          // Preload a random next image (different from current)
+          const nextIdx = getRandomIndex();
+          imgB.src = folderPath + imageFiles[nextIdx];
+          
+          setTimeout(() => {
+            imgB.style.transition = 'opacity 1s ease-in-out';
+            scheduleNext();
+          }, 100);
+        }
+      }
+      
+      function fadeToNext() {
+        if (imageFiles.length <= 1 || isTransitioning) return;
+        
+        isTransitioning = true;
+        
+        // Pick a random next image (different from current)
+        const nextIdx = getRandomIndex();
+        imgB.src = folderPath + imageFiles[nextIdx];
         
         imgB.style.transition = 'none';
         imgB.style.opacity = '0';
         
-        currentIndex = nextImageIndex;
-        nextImageIndex = (nextImageIndex + 1) % imageFiles.length;
+        void imgB.offsetWidth;
         
-        imgB.src = folderPath + imageFiles[nextImageIndex];
+        imgB.style.transition = 'opacity 1s ease-in-out';
+        imgB.style.opacity = '1';
         
-        isTransitioning = false;
-        
-        scheduleNext();
-      }, 1000);
-    }
-    
-    function scheduleNext() {
-      if (timer) clearTimeout(timer);
-      if (imageFiles.length <= 1) return;
+        setTimeout(() => {
+          imgA.src = imgB.src;
+          imgA.style.opacity = '1';
+          
+          imgB.style.transition = 'none';
+          imgB.style.opacity = '0';
+          
+          lastIndex = nextIdx;  // Update last shown index
+          
+          isTransitioning = false;
+          
+          scheduleNext();
+        }, 1000);
+      }
       
-      timer = setTimeout(() => {
-        fadeToNext();
-      }, 6000);
+      function scheduleNext() {
+        if (timer) clearTimeout(timer);
+        if (imageFiles.length <= 1) return;
+        
+        timer = setTimeout(() => {
+          fadeToNext();
+        }, 6000);
+      }
+      
+      discoverImages();
     }
-    
-    discoverImages();
-  }
 
   // Initialize slideshows when page loads
   window.addEventListener('DOMContentLoaded', function() {
