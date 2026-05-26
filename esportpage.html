@@ -236,6 +236,37 @@
       margin-right: 50px;
     }
 
+        /* ----- 9:16 Aspect Ratio for Index2 ----- */
+    .segment-slideshow.portrait {
+      width: 281px;  /* 9:16 ratio based on 500px height (500 * 9/16 = 281.25) */
+      height: 500px;
+      position: relative;
+      flex-shrink: 0;
+    }
+    
+    .segment-slideshow.portrait img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 1s ease-in-out;
+    }
+    
+    .image-box.portrait {
+      width: 281px;
+      height: 500px;
+      background: #333;
+      flex-shrink: 0;
+    }
+    
+    .image-box.portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
     /* ----- Custom Thin Scrollbar ----- */
     ::-webkit-scrollbar {
       width: 8px !important;
@@ -326,25 +357,28 @@
       </div>
     </div>
 
-    <!-- Index 2: Events (hidden by default) -->
-    <div class="content-container hidden" id="index2">
-      <!-- Mini Segment 1 (Normal) -->
-      <div class="mini-segment normal">
-        <div class="image-box">
-          <img src="Images/SlideshowImages/Fancy1.png" alt="Event 1">
+      <!-- Index 2: Events (hidden by default) -->
+      <div class="content-container hidden" id="index2">
+        <!-- Mini Segment 1 (Normal) - Big Events Slideshow -->
+        <div class="mini-segment normal">
+          <div class="segment-slideshow portrait" id="bigEventsSlideshow">
+            <img class="imgA" src="" alt="Big Event A">
+            <img class="imgB" src="" alt="Big Event B">
+          </div>
+          <div class="text-box">
+            Big events are where I thrive! From packed venues to main stage productions, I bring the energy that matches the scale of the moment.
+          </div>
         </div>
-        <div class="text-box">
-          SampleText
-        </div>
-      </div>
-
-      <!-- Mini Segment 2 (Inverted) -->
-      <div class="mini-segment inverted">
-        <div class="image-box">
-          <img src="Images/SlideshowImages/FireTruck.png" alt="Event 2">
-        </div>
-        <div class="text-box">
-          SampleText
+      
+        <!-- Mini Segment 2 (Inverted) - Small Events Slideshow -->
+        <div class="mini-segment inverted">
+          <div class="segment-slideshow portrait" id="smallEventsSlideshow">
+            <img class="imgA" src="" alt="Small Event A">
+            <img class="imgB" src="" alt="Small Event B">
+          </div>
+          <div class="text-box">
+            Smaller events have their own charm. I love the intimate atmosphere where I can connect with everyone in the room and make each moment count.
+          </div>
         </div>
       </div>
     </div>
@@ -387,27 +421,38 @@
       
     async function discoverImages() {
       let commonNames = [];
+      let extensions = ['.png'];
       
       // Determine which folder we're searching and set appropriate names
       if (folderPath.includes('CastingSeg')) {
-        // Cast1 through Cast15
         for (let i = 1; i <= 15; i++) {
           commonNames.push('Cast' + i);
         }
+        extensions = ['.png'];
       } else if (folderPath.includes('InterviewSeg')) {
-        // Int1 through Int17
         for (let i = 1; i <= 17; i++) {
           commonNames.push('Int' + i);
         }
+        extensions = ['.png'];
+      } else if (folderPath.includes('EventsImages')) {
+        // Check which slideshow this is based on containerId
+        if (containerId === 'bigEventsSlideshow') {
+          for (let i = 1; i <= 8; i++) {
+            commonNames.push('Big' + i);
+          }
+        } else if (containerId === 'smallEventsSlideshow') {
+          for (let i = 1; i <= 13; i++) {
+            commonNames.push('Small' + i);
+          }
+        }
+        extensions = ['.jpg', '.jpeg', '.JPG', '.JPEG'];
       } else {
-        // Fallback for any other folders
         commonNames = [
           "Image1", "Image2", "Image3", "Image4", "Image5",
           "CDL2025", "Fancy7", "TeaCup", "Fancy1", "FireTruck"
         ];
       }
       
-      const extensions = ['.png'];
       const discoveredImages = [];
       
       for (const name of commonNames) {
@@ -427,18 +472,9 @@
         initializeSlideshow();
       } else {
         console.warn('No images found in ' + folderPath);
-        console.warn('Expected names: ' + commonNames.join(', ') + '.png');
+        console.warn('Expected names: ' + commonNames.join(', ') + ' with extensions: ' + extensions.join(', '));
       }
     }
-      
-      function checkImageExists(url) {
-        return new Promise((resolve) => {
-          const img = new Image();
-          img.onload = () => resolve(true);
-          img.onerror = () => resolve(false);
-          img.src = url;
-        });
-      }
       
       function getRandomIndex() {
         if (imageFiles.length <= 1) return 0;
@@ -533,6 +569,8 @@
     window.addEventListener('DOMContentLoaded', function() {
       createSlideshow('castingSlideshow', 'Images/CastingSeg/');
       createSlideshow('interviewingSlideshow2', 'Images/InterviewSeg/');
+      createSlideshow('bigEventsSlideshow', 'Images/EventsImages/');
+      createSlideshow('smallEventsSlideshow', 'Images/EventsImages/');
     });
 </script>
 </body>
