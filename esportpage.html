@@ -395,34 +395,51 @@
       let timer = null;
       let isTransitioning = false;
       
-      async function discoverImages() {
-        const commonNames = [
+    async function discoverImages() {
+      let commonNames = [];
+      
+      // Determine which folder we're searching and set appropriate names
+      if (folderPath.includes('CastingSeg')) {
+        // Cast1 through Cast15
+        for (let i = 1; i <= 15; i++) {
+          commonNames.push('Cast' + i);
+        }
+      } else if (folderPath.includes('InterviewSeg')) {
+        // Int1 through Int17
+        for (let i = 1; i <= 17; i++) {
+          commonNames.push('Int' + i);
+        }
+      } else {
+        // Fallback for any other folders
+        commonNames = [
           "Image1", "Image2", "Image3", "Image4", "Image5",
-          "CDL2025", "Fancy7", "TeaCup", "Fancy1", "FireTruck", "GarethOnAir (1)"
+          "CDL2025", "Fancy7", "TeaCup", "Fancy1", "FireTruck"
         ];
-        
-        const extensions = ['.png'];
-        const discoveredImages = [];
-        
-        for (const name of commonNames) {
-          for (const ext of extensions) {
-            const imagePath = folderPath + name + ext;
-            const exists = await checkImageExists(imagePath);
-            if (exists && !discoveredImages.includes(name + ext)) {
-              discoveredImages.push(name + ext);
-              break;
-            }
+      }
+      
+      const extensions = ['.png'];
+      const discoveredImages = [];
+      
+      for (const name of commonNames) {
+        for (const ext of extensions) {
+          const imagePath = folderPath + name + ext;
+          const exists = await checkImageExists(imagePath);
+          if (exists && !discoveredImages.includes(name + ext)) {
+            discoveredImages.push(name + ext);
+            break;
           }
         }
-        
-        if (discoveredImages.length > 0) {
-          imageFiles = discoveredImages.sort();
-          console.log('Discovered images for ' + containerId + ':', imageFiles);
-          initializeSlideshow();
-        } else {
-          console.warn('No images found in ' + folderPath);
-        }
       }
+      
+      if (discoveredImages.length > 0) {
+        imageFiles = discoveredImages.sort();
+        console.log('Discovered images for ' + containerId + ':', imageFiles);
+        initializeSlideshow();
+      } else {
+        console.warn('No images found in ' + folderPath);
+        console.warn('Expected names: ' + commonNames.join(', ') + '.png');
+      }
+    }
       
       function checkImageExists(url) {
         return new Promise((resolve) => {
