@@ -183,16 +183,16 @@
     }
     
     .mini-segment.normal .text-box {
-      margin-left: 250px;  /* Adjusted from 350px since image is wider */
+      margin-left: 150px;
     }
     
     .mini-segment.inverted .text-box {
-      margin-right: 250px;  /* Adjusted from 350px since image is wider */
+      margin-right: 150px;
     }
 
     /* ----- Mini Segment Slideshow ----- */
     .segment-slideshow {
-      width: 650px;  /* Changed from 500px */
+      width: 650px;
       height: 500px;
       position: relative;
       flex-shrink: 0;
@@ -219,10 +219,21 @@
     }
     
     .image-box {
-      width: 650px;  /* Changed from 500px */
+      width: 650px;
       height: 500px;
       background: #333;
       flex-shrink: 0;
+    }
+    
+    /* 50px from left for normal, 50px from right for inverted */
+    .mini-segment.normal .segment-slideshow,
+    .mini-segment.normal .image-box {
+      margin-left: 50px;
+    }
+    
+    .mini-segment.inverted .segment-slideshow,
+    .mini-segment.inverted .image-box {
+      margin-right: 50px;
     }
 
     /* ----- Custom Thin Scrollbar ----- */
@@ -304,25 +315,24 @@
         </div>
       </div>
     
-      <!-- Mini Segment 2 (Inverted) - Static Image -->
-      <div class="mini-segment inverted">
-        <div class="image-box">
-          <img src="Images/SlideshowImages/Fancy7.png" alt="Stream 2">
-        </div>
-        <div class="text-box">
-          SampleText
-        </div>
+    <!-- Mini Segment 2 (Inverted) - Interviewing Slideshow -->
+    <div class="mini-segment inverted">
+      <div class="segment-slideshow" id="interviewingSlideshow2">
+        <img class="imgA" src="" alt="Interview A">
+        <img class="imgB" src="" alt="Interview B">
       </div>
+      <div class="text-box">
+        Interviewing is where I connect with players and personalities on a human level, bringing out stories that fans love to hear.
+      </div>
+    </div>
     
-      <!-- Mini Segment 3 (Normal) - Interviewing Slideshow -->
-      <div class="mini-segment normal">
-        <div class="segment-slideshow" id="interviewingSlideshow">
-          <img class="imgA" src="" alt="Interview A">
-          <img class="imgB" src="" alt="Interview B">
-        </div>
-        <div class="text-box">
-          Interviewing is where I connect with players and personalities on a human level, bringing out stories that fans love to hear.
-        </div>
+    <!-- Mini Segment 3 (Normal) - Static Image (or keep as slideshow) -->
+    <div class="mini-segment normal">
+      <div class="image-box">
+        <img src="Images/SlideshowImages/TeaCup.png" alt="Stream 3">
+      </div>
+      <div class="text-box">
+        SampleText
       </div>
     </div>
 
@@ -512,11 +522,11 @@
       discoverImages();
     }
 
-  // Initialize slideshows when page loads
-  window.addEventListener('DOMContentLoaded', function() {
-    createSlideshow('castingSlideshow', 'Images/CastingSeg/');
-    createSlideshow('interviewingSlideshow', 'Images/InterviewingSeg/');
-  });
+    // Initialize slideshows when page loads
+    window.addEventListener('DOMContentLoaded', function() {
+      createSlideshow('castingSlideshow', 'Images/CastingSeg/');
+      createSlideshow('interviewingSlideshow2', 'Images/InterviewSeg/');
+    });
 </script>
 </body>
 </html>
