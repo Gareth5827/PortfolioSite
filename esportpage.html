@@ -346,43 +346,42 @@
         </div>
       </div>
     
-    <!-- Mini Segment 2 (Inverted) - Interviewing Slideshow -->
-    <div class="mini-segment inverted">
-      <div class="segment-slideshow" id="interviewingSlideshow2">
-        <img class="imgA" src="" alt="Interview A">
-        <img class="imgB" src="" alt="Interview B">
-      </div>
-      <div class="text-box">
-        When it comes to interviewing, I’m an allrounder that loves to make people laugh! I have done very technical interviews that dig into the minds of pro players, surface level interviews for players who aren’t super comfortable on the mic, funny interviews where I get players to show their personalities, as well as serious interviews where players have come off a double loss and have them leave on a good note. I have talked with players and coaches of varying comfort levels both on and off stream, and typically I talk to players beforehand to let them tell me what I can and can’t bring up during the interview. As a natural born people pleaser and class clown, there aren’t many people I can’t make smile or laugh when I talk to them!
-      </div>
-    </div>
-
-      <!-- Index 2: Events (hidden by default) -->
-      <div class="content-container hidden" id="index2">
-        <!-- Mini Segment 1 (Normal) - Big Events Slideshow -->
-        <div class="mini-segment normal">
-          <div class="segment-slideshow portrait" id="bigEventsSlideshow">
-            <img class="imgA" src="" alt="Big Event A">
-            <img class="imgB" src="" alt="Big Event B">
-          </div>
-          <div class="text-box">
-            Big events are where I thrive! From packed venues to main stage productions, I bring the energy that matches the scale of the moment.
-          </div>
+      <!-- Mini Segment 2 (Inverted) - Interviewing Slideshow -->
+      <div class="mini-segment inverted">
+        <div class="segment-slideshow" id="interviewingSlideshow2">
+          <img class="imgA" src="" alt="Interview A">
+          <img class="imgB" src="" alt="Interview B">
         </div>
-      
-        <!-- Mini Segment 2 (Inverted) - Small Events Slideshow -->
-        <div class="mini-segment inverted">
-          <div class="segment-slideshow portrait" id="smallEventsSlideshow">
-            <img class="imgA" src="" alt="Small Event A">
-            <img class="imgB" src="" alt="Small Event B">
-          </div>
-          <div class="text-box">
-            Smaller events have their own charm. I love the intimate atmosphere where I can connect with everyone in the room and make each moment count.
-          </div>
+        <div class="text-box">
+          When it comes to interviewing, I'm an allrounder that loves to make people laugh! I have done very technical interviews that dig into the minds of pro players, surface level interviews for players who aren't super comfortable on the mic, funny interviews where I get players to show their personalities, as well as serious interviews where players have come off a double loss and have them leave on a good note. I have talked with players and coaches of varying comfort levels both on and off stream, and typically I talk to players beforehand to let them tell me what I can and can't bring up during the interview. As a natural born people pleaser and class clown, there aren't many people I can't make smile or laugh when I talk to them!
         </div>
       </div>
     </div>
-  </div>
+    
+    <!-- Index 2: Events (hidden by default) - MOVED OUTSIDE INDEX1 -->
+    <div class="content-container hidden" id="index2">
+      <!-- Mini Segment 1 (Normal) - Big Events Slideshow -->
+      <div class="mini-segment normal">
+        <div class="segment-slideshow portrait" id="bigEventsSlideshow">
+          <img class="imgA" src="" alt="Big Event A">
+          <img class="imgB" src="" alt="Big Event B">
+        </div>
+        <div class="text-box">
+          Big events are where I thrive! From packed venues to main stage productions, I bring the energy that matches the scale of the moment.
+        </div>
+      </div>
+    
+      <!-- Mini Segment 2 (Inverted) - Small Events Slideshow -->
+      <div class="mini-segment inverted">
+        <div class="segment-slideshow portrait" id="smallEventsSlideshow">
+          <img class="imgA" src="" alt="Small Event A">
+          <img class="imgB" src="" alt="Small Event B">
+        </div>
+        <div class="text-box">
+          Smaller events have their own charm. I love the intimate atmosphere where I can connect with everyone in the room and make each moment count.
+        </div>
+      </div>
+    </div>
 
   <script>
   let swapState = false;
@@ -474,6 +473,15 @@
         console.warn('No images found in ' + folderPath);
         console.warn('Expected names: ' + commonNames.join(', ') + ' with extensions: ' + extensions.join(', '));
       }
+    }
+
+          function checkImageExists(url) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = url;
+      });
     }
       
       function getRandomIndex() {
