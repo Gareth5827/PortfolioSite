@@ -280,6 +280,29 @@
       object-fit: cover;
     }
 
+        /* ----- Video Container for Mini Segment 3 ----- */
+    .video-container {
+      width: 1422px;  /* 1920/1080 * 800 = 1422px at 800px height */
+      height: 800px;
+      flex-shrink: 0;
+      position: relative;
+    }
+    
+    .video-container iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    .mini-segment.video-segment {
+      height: 900px;  /* 800px video + 50px top + 50px bottom */
+      padding: 50px;
+    }
+    
+    .video-segment .text-box {
+      height: 800px;
+    }
+
     /* ----- Custom Thin Scrollbar ----- */
     ::-webkit-scrollbar {
       width: 8px !important;
@@ -368,6 +391,21 @@
         </div>
         <div class="text-box">
           When it comes to interviewing, I'm an allrounder that loves to make people laugh! I have done very technical interviews that dig into the minds of pro players, surface level interviews for players who aren't super comfortable on the mic, funny interviews where I get players to show their personalities, as well as serious interviews where players have come off a double loss and have them leave on a good note. I have talked with players and coaches of varying comfort levels both on and off stream, and typically I talk to players beforehand to let them tell me what I can and can't bring up during the interview. As a natural born people pleaser and class clown, there aren't many people I can't make smile or laugh when I talk to them!
+        </div>
+      </div>
+      <!-- Mini Segment 3 (Normal) - YouTube Video -->
+      <div class="mini-segment normal video-segment">
+        <div class="video-container">
+          <iframe 
+            src="https://www.youtube.com/embed/LoMO4gXLKJo" 
+            title="YouTube video player" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="text-box">
+          This is a small compilation of inverviews I've done with Conestoga College!
         </div>
       </div>
     </div>
