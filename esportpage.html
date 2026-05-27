@@ -142,7 +142,7 @@
     
     /* Taller segments for Index2 */
     .mini-segment.tall {
-      height: 900px;
+      height: 1000px;
     }
 
     .mini-segment.normal {
@@ -247,10 +247,12 @@
 
     /* ----- 9:16 Aspect Ratio for Index2 ----- */
     .segment-slideshow.portrait {
-      width: 506px;  /* 9:16 ratio based on 900px height (900 * 9/16 = 506.25) */
+      width: 506px;
       height: 900px;
       position: relative;
       flex-shrink: 0;
+      margin-top: auto;  /* Center vertically in the 1000px segment */
+      margin-bottom: auto;
     }
     
     .segment-slideshow.portrait img {
@@ -268,6 +270,8 @@
       height: 900px;
       background: #333;
       flex-shrink: 0;
+      margin-top: auto;
+      margin-bottom: auto;
     }
     
     .image-box.portrait img {
