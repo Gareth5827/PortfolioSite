@@ -136,8 +136,13 @@
       display: flex;
       align-items: center;
       position: relative;
-      border: 8px solid rgba(255, 255, 255, 0.35);  /* Changed from 0.75 to 0.35 */
-      background: rgba(255, 255, 255, 0.20);  /* White with 20% opacity */
+      border: 8px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.20);
+    }
+    
+    /* Taller segments for Index2 */
+    .mini-segment.tall {
+      height: 900px;
     }
 
     .mini-segment.normal {
@@ -180,6 +185,10 @@
       overflow-y: auto;
       display: flex;
       align-items: center;
+    }
+
+        .text-box.tall {
+      height: 900px;
     }
     
     .mini-segment.normal .text-box {
@@ -236,10 +245,10 @@
       margin-right: 50px;
     }
 
-        /* ----- 9:16 Aspect Ratio for Index2 ----- */
+    /* ----- 9:16 Aspect Ratio for Index2 ----- */
     .segment-slideshow.portrait {
-      width: 281px;  /* 9:16 ratio based on 500px height (500 * 9/16 = 281.25) */
-      height: 500px;
+      width: 506px;  /* 9:16 ratio based on 900px height (900 * 9/16 = 506.25) */
+      height: 900px;
       position: relative;
       flex-shrink: 0;
     }
@@ -255,8 +264,8 @@
     }
     
     .image-box.portrait {
-      width: 281px;
-      height: 500px;
+      width: 506px;
+      height: 900px;
       background: #333;
       flex-shrink: 0;
     }
@@ -358,26 +367,26 @@
       </div>
     </div>
     
-    <!-- Index 2: Events (hidden by default) - MOVED OUTSIDE INDEX1 -->
+    <!-- Index 2: Events (hidden by default) -->
     <div class="content-container hidden" id="index2">
       <!-- Mini Segment 1 (Normal) - Big Events Slideshow -->
-      <div class="mini-segment normal">
+      <div class="mini-segment normal tall">
         <div class="segment-slideshow portrait" id="bigEventsSlideshow">
           <img class="imgA" src="" alt="Big Event A">
           <img class="imgB" src="" alt="Big Event B">
         </div>
-        <div class="text-box">
+        <div class="text-box tall">
           Big events are where I thrive! From packed venues to main stage productions, I bring the energy that matches the scale of the moment.
         </div>
       </div>
     
       <!-- Mini Segment 2 (Inverted) - Small Events Slideshow -->
-      <div class="mini-segment inverted">
+      <div class="mini-segment inverted tall">
         <div class="segment-slideshow portrait" id="smallEventsSlideshow">
           <img class="imgA" src="" alt="Small Event A">
           <img class="imgB" src="" alt="Small Event B">
         </div>
-        <div class="text-box">
+        <div class="text-box tall">
           Smaller events have their own charm. I love the intimate atmosphere where I can connect with everyone in the room and make each moment count.
         </div>
       </div>
