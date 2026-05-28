@@ -281,11 +281,20 @@
     }
 
     /* ----- Video Container for Mini Segment 3 ----- */
+    .video-segment {
+      height: 900px;
+      padding: 50px;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 30px;
+    }
+    
     .video-container {
-      width: 1358px;  /* 1920/1080 * 800 = 1422px at 800px height */
-      height: 764;
+      width: 1422px;
+      height: 800px;
       flex-shrink: 0;
-      position: relative;
     }
     
     .video-container iframe {
@@ -294,18 +303,17 @@
       border: none;
     }
     
-    .mini-segment.video-segment {
-      height: 864px;  /* 800px video + 50px top + 50px bottom */
-      padding: 50px;
-      justify-content: flex-start;  /* Align items to the left */
-      gap: 30px;  /* Space between video and text box */
-    }
-    
-    .video-segment .text-box {
+    .video-text-box {
       height: 800px;
       width: 300px;
-      flex: 0 0 400px;  /* Fixed width, no growing or shrinking */
-      margin-left: 0;  /* Remove margin since we're using gap */
+      font-family: 'HW', Arial, sans-serif;
+      font-size: 24pt;
+      color: white;
+      padding: 30px;
+      overflow-y: auto;
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
     }
 
     /* ----- Custom Thin Scrollbar ----- */
@@ -398,8 +406,8 @@
           When it comes to interviewing, I'm an allrounder that loves to make people laugh! I have done very technical interviews that dig into the minds of pro players, surface level interviews for players who aren't super comfortable on the mic, funny interviews where I get players to show their personalities, as well as serious interviews where players have come off a double loss and have them leave on a good note. I have talked with players and coaches of varying comfort levels both on and off stream, and typically I talk to players beforehand to let them tell me what I can and can't bring up during the interview. As a natural born people pleaser and class clown, there aren't many people I can't make smile or laugh when I talk to them!
         </div>
       </div>
-      <!-- Mini Segment 3 (Normal) - YouTube Video -->
-      <div class="mini-segment normal video-segment">
+      <!-- Mini Segment 3 - YouTube Video -->
+      <div class="mini-segment video-segment">
         <div class="video-container">
           <iframe 
             src="https://www.youtube.com/embed/LoMO4gXLKJo" 
@@ -409,8 +417,8 @@
             allowfullscreen>
           </iframe>
         </div>
-        <div class="text-box">
-          This is a small compilation of inverviews I've done with Conestoga College!
+        <div class="video-text-box">
+          This is a small compilation of interviews I've done with Conestoga College!
         </div>
       </div>
     </div>
