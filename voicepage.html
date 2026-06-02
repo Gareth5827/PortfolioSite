@@ -344,6 +344,7 @@
     <!-- Index 1: Characters (default shown) -->
     <div class="content-container" id="index1">
       <!-- Mini Segment 1 - Announcer -->
+      <div class="mini-segment">
         <div class="audio-player" data-audio="MP3s/VoiceActing/Announcer.mp3">
           <div class="audio-title">Announcer</div>
           <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
@@ -359,274 +360,314 @@
             <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
           </div>
         </div>
-
-      <!-- Mini Segment 2 - Buttons -->
-      <div class="mini-segment">
-        <div class="audio-player" data-audio="MP3s/VoiceActing/Buttons.mp3">
-          <div class="audio-title">Buttons</div>
-          <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
-          <div class="volume-container">
-            <span>🔊</span>
-            <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
-          </div>
-        </div>
         <div class="voice-text-box">
-          SampleButtonsText
+          SampleAnnouncerText
         </div>
       </div>
 
-      <!-- Mini Segment 3 - Charlie -->
-      <div class="mini-segment">
-        <div class="audio-player" data-audio="MP3s/VoiceActing/Charlie.mp3">
-          <div class="audio-title">Charlie</div>
-          <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
-          <div class="volume-container">
-            <span>🔊</span>
-            <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
+      <!-- 1. Buttons -->
+      <div class="audio-player" data-audio="Audio/Buttons.mp3">
+        <div class="audio-title">Before & After Edit</div>
+        <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
+        <div class="progress-container">
+          <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+          <div class="time-display">
+            <span class="current-time">0:00</span>
+            <span class="total-time">0:00</span>
           </div>
         </div>
-        <div class="voice-text-box">
-          SampleCharlieText
+        <div class="volume-container">
+          <span>🔊</span>
+          <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
         </div>
       </div>
-
-      <!-- Mini Segment 4 - Corp -->
-      <div class="mini-segment">
-        <div class="audio-player" data-audio="MP3s/VoiceActing/Corp.mp3">
-          <div class="audio-title">Corp</div>
-          <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
-          <div class="volume-container">
-            <span>🔊</span>
-            <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
+      
+      <!-- 2. Charlie -->
+      <div class="audio-player" data-audio="Audio/Charlie.mp3">
+        <div class="audio-title">Before & After Edit</div>
+        <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
+        <div class="progress-container">
+          <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+          <div class="time-display">
+            <span class="current-time">0:00</span>
+            <span class="total-time">0:00</span>
           </div>
         </div>
-        <div class="voice-text-box">
-          SampleCorpText
+        <div class="volume-container">
+          <span>🔊</span>
+          <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
         </div>
       </div>
-
-      <!-- Mini Segment 5 - Daniel -->
-      <div class="mini-segment">
-        <div class="audio-player" data-audio="MP3s/VoiceActing/Daniel.mp3">
-          <div class="audio-title">Daniel</div>
-          <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
-          <div class="volume-container">
-            <span>🔊</span>
-            <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
+      
+      <!-- 3. Corp -->
+      <div class="audio-player" data-audio="Audio/Corp.mp3">
+        <div class="audio-title">Before & After Edit</div>
+        <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
+        <div class="progress-container">
+          <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+          <div class="time-display">
+            <span class="current-time">0:00</span>
+            <span class="total-time">0:00</span>
           </div>
         </div>
-        <div class="voice-text-box">
-          SampleDanielText
+        <div class="volume-container">
+          <span>🔊</span>
+          <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
         </div>
       </div>
-
-      <!-- Mini Segment 6 - Dylan -->
-      <div class="mini-segment">
-        <div class="audio-player" data-audio="MP3s/VoiceActing/Dylan.mp3">
-          <div class="audio-title">Dylan</div>
-          <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
-          <div class="volume-container">
-            <span>🔊</span>
-            <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
+      
+      <!-- 4. Daniel -->
+      <div class="audio-player" data-audio="Audio/Daniel.mp3">
+        <div class="audio-title">Before & After Edit</div>
+        <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
+        <div class="progress-container">
+          <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+          <div class="time-display">
+            <span class="current-time">0:00</span>
+            <span class="total-time">0:00</span>
           </div>
         </div>
-        <div class="voice-text-box">
-          SampleDylanText
+        <div class="volume-container">
+          <span>🔊</span>
+          <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
         </div>
       </div>
-
-      <!-- Mini Segment 7 - GenMascVA -->
-      <div class="mini-segment">
-        <div class="audio-player" data-audio="MP3s/VoiceActing/GenMascVA.mp3">
-          <div class="audio-title">GenMascVA</div>
-          <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
-          <div class="volume-container">
-            <span>🔊</span>
-            <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
+      
+      <!-- 5. Dylan -->
+      <div class="audio-player" data-audio="Audio/Dylan.mp3">
+        <div class="audio-title">Before & After Edit</div>
+        <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
+        <div class="progress-container">
+          <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+          <div class="time-display">
+            <span class="current-time">0:00</span>
+            <span class="total-time">0:00</span>
           </div>
         </div>
-        <div class="voice-text-box">
-          SampleGenMascVAText
+        <div class="volume-container">
+          <span>🔊</span>
+          <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
         </div>
       </div>
-
-      <!-- Mini Segment 8 - GenMascVA2 -->
-      <div class="mini-segment">
-        <div class="audio-player" data-audio="MP3s/VoiceActing/GenMascVA2.mp3">
-          <div class="audio-title">GenMascVA2</div>
-          <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
-          <div class="volume-container">
-            <span>🔊</span>
-            <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
+      
+      <!-- 6. GenMascVA -->
+      <div class="audio-player" data-audio="Audio/GenMascVA.mp3">
+        <div class="audio-title">Before & After Edit</div>
+        <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
+        <div class="progress-container">
+          <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+          <div class="time-display">
+            <span class="current-time">0:00</span>
+            <span class="total-time">0:00</span>
           </div>
         </div>
-        <div class="voice-text-box">
-          SampleGenMascVA2Text
+        <div class="volume-container">
+          <span>🔊</span>
+          <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
         </div>
       </div>
-
-      <!-- Mini Segment 9 - Grayson -->
-      <div class="mini-segment">
-        <div class="audio-player" data-audio="MP3s/VoiceActing/Grayson.mp3">
-          <div class="audio-title">Grayson</div>
-          <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
-          <div class="volume-container">
-            <span>🔊</span>
-            <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
+      
+      <!-- 7. GenMascVA2 -->
+      <div class="audio-player" data-audio="Audio/GenMascVA2.mp3">
+        <div class="audio-title">Before & After Edit</div>
+        <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
+        <div class="progress-container">
+          <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+          <div class="time-display">
+            <span class="current-time">0:00</span>
+            <span class="total-time">0:00</span>
           </div>
         </div>
-        <div class="voice-text-box">
-          SampleGraysonText
+        <div class="volume-container">
+          <span>🔊</span>
+          <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
         </div>
       </div>
-
-      <!-- Mini Segment 10 - Liam -->
-      <div class="mini-segment">
-        <div class="audio-player" data-audio="MP3s/VoiceActing/Liam.mp3">
-          <div class="audio-title">Liam</div>
-          <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
-          <div class="volume-container">
-            <span>🔊</span>
-            <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
+      
+      <!-- 8. Grayson -->
+      <div class="audio-player" data-audio="Audio/Grayson.mp3">
+        <div class="audio-title">Before & After Edit</div>
+        <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
+        <div class="progress-container">
+          <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+          <div class="time-display">
+            <span class="current-time">0:00</span>
+            <span class="total-time">0:00</span>
           </div>
         </div>
-        <div class="voice-text-box">
-          SampleLiamText
+        <div class="volume-container">
+          <span>🔊</span>
+          <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
         </div>
       </div>
-
-      <!-- Mini Segment 11 - Marcos -->
-      <div class="mini-segment">
-        <div class="audio-player" data-audio="MP3s/VoiceActing/Marcos.mp3">
-          <div class="audio-title">Marcos</div>
-          <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
-          <div class="volume-container">
-            <span>🔊</span>
-            <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
+      
+      <!-- 9. Liam -->
+      <div class="audio-player" data-audio="Audio/Liam.mp3">
+        <div class="audio-title">Before & After Edit</div>
+        <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
+        <div class="progress-container">
+          <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+          <div class="time-display">
+            <span class="current-time">0:00</span>
+            <span class="total-time">0:00</span>
           </div>
         </div>
-        <div class="voice-text-box">
-          SampleMarcosText
+        <div class="volume-container">
+          <span>🔊</span>
+          <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
         </div>
       </div>
-
-      <!-- Mini Segment 12 - Newsie -->
-      <div class="mini-segment">
-        <div class="audio-player" data-audio="MP3s/VoiceActing/Newsie.mp3">
-          <div class="audio-title">Newsie</div>
-          <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
-          <div class="volume-container">
-            <span>🔊</span>
-            <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
+      
+      <!-- 10. Marcos -->
+      <div class="audio-player" data-audio="Audio/Marcos.mp3">
+        <div class="audio-title">Before & After Edit</div>
+        <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
+        <div class="progress-container">
+          <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+          <div class="time-display">
+            <span class="current-time">0:00</span>
+            <span class="total-time">0:00</span>
           </div>
         </div>
-        <div class="voice-text-box">
-          SampleNewsieText
+        <div class="volume-container">
+          <span>🔊</span>
+          <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
         </div>
       </div>
-
-      <!-- Mini Segment 13 - O'malley -->
-      <div class="mini-segment">
-        <div class="audio-player" data-audio="MP3s/VoiceActing/O'malley.mp3">
-          <div class="audio-title">O'malley</div>
-          <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
-          <div class="volume-container">
-            <span>🔊</span>
-            <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
+      
+      <!-- 11. Newsie -->
+      <div class="audio-player" data-audio="Audio/Newsie.mp3">
+        <div class="audio-title">Before & After Edit</div>
+        <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
+        <div class="progress-container">
+          <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+          <div class="time-display">
+            <span class="current-time">0:00</span>
+            <span class="total-time">0:00</span>
           </div>
         </div>
-        <div class="voice-text-box">
-          SampleO'malleyText
+        <div class="volume-container">
+          <span>🔊</span>
+          <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
         </div>
       </div>
-
-      <!-- Mini Segment 14 - Regis -->
-      <div class="mini-segment">
-        <div class="audio-player" data-audio="MP3s/VoiceActing/Regis.mp3">
-          <div class="audio-title">Regis</div>
-          <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
-          <div class="volume-container">
-            <span>🔊</span>
-            <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
+      
+      <!-- 12. O'malley -->
+      <div class="audio-player" data-audio="Audio/O'malley.mp3">
+        <div class="audio-title">Before & After Edit</div>
+        <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
+        <div class="progress-container">
+          <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+          <div class="time-display">
+            <span class="current-time">0:00</span>
+            <span class="total-time">0:00</span>
           </div>
         </div>
-        <div class="voice-text-box">
-          SampleRegisText
+        <div class="volume-container">
+          <span>🔊</span>
+          <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
         </div>
       </div>
-
-      <!-- Mini Segment 15 - Sarge -->
-      <div class="mini-segment">
-        <div class="audio-player" data-audio="MP3s/VoiceActing/Sarge.mp3">
-          <div class="audio-title">Sarge</div>
-          <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
-          <div class="volume-container">
-            <span>🔊</span>
-            <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
+      
+      <!-- 13. Regis -->
+      <div class="audio-player" data-audio="Audio/Regis.mp3">
+        <div class="audio-title">Before & After Edit</div>
+        <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
+        <div class="progress-container">
+          <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+          <div class="time-display">
+            <span class="current-time">0:00</span>
+            <span class="total-time">0:00</span>
           </div>
         </div>
-        <div class="voice-text-box">
-          SampleSargeText
+        <div class="volume-container">
+          <span>🔊</span>
+          <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
         </div>
       </div>
-
-      <!-- Mini Segment 16 - Scientist -->
-      <div class="mini-segment">
-        <div class="audio-player" data-audio="MP3s/VoiceActing/Scientist.mp3">
-          <div class="audio-title">Scientist</div>
-          <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
-          <div class="volume-container">
-            <span>🔊</span>
-            <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
+      
+      <!-- 14. Sarge -->
+      <div class="audio-player" data-audio="Audio/Sarge.mp3">
+        <div class="audio-title">Before & After Edit</div>
+        <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
+        <div class="progress-container">
+          <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+          <div class="time-display">
+            <span class="current-time">0:00</span>
+            <span class="total-time">0:00</span>
           </div>
         </div>
-        <div class="voice-text-box">
-          SampleScientistText
+        <div class="volume-container">
+          <span>🔊</span>
+          <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
         </div>
       </div>
-
-      <!-- Mini Segment 17 - StrangeMan -->
-      <div class="mini-segment">
-        <div class="audio-player" data-audio="MP3s/VoiceActing/StrangeMan.mp3">
-          <div class="audio-title">StrangeMan</div>
-          <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
-          <div class="volume-container">
-            <span>🔊</span>
-            <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
+      
+      <!-- 15. Scientist -->
+      <div class="audio-player" data-audio="Audio/Scientist.mp3">
+        <div class="audio-title">Before & After Edit</div>
+        <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
+        <div class="progress-container">
+          <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+          <div class="time-display">
+            <span class="current-time">0:00</span>
+            <span class="total-time">0:00</span>
           </div>
         </div>
-        <div class="voice-text-box">
-          SampleStrangeManText
+        <div class="volume-container">
+          <span>🔊</span>
+          <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
         </div>
       </div>
-
-      <!-- Mini Segment 18 - Toll -->
-      <div class="mini-segment">
-        <div class="audio-player" data-audio="MP3s/VoiceActing/Toll.mp3">
-          <div class="audio-title">Toll</div>
-          <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
-          <div class="volume-container">
-            <span>🔊</span>
-            <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
+      
+      <!-- 16. StrangeMan -->
+      <div class="audio-player" data-audio="Audio/StrangeMan.mp3">
+        <div class="audio-title">Before & After Edit</div>
+        <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
+        <div class="progress-container">
+          <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+          <div class="time-display">
+            <span class="current-time">0:00</span>
+            <span class="total-time">0:00</span>
           </div>
         </div>
-        <div class="voice-text-box">
-          SampleTollText
+        <div class="volume-container">
+          <span>🔊</span>
+          <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
         </div>
       </div>
-
-      <!-- Mini Segment 19 - TonyMiller -->
-      <div class="mini-segment">
-        <div class="audio-player" data-audio="MP3s/VoiceActing/TonyMiller.mp3">
-          <div class="audio-title">TonyMiller</div>
-          <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
-          <div class="volume-container">
-            <span>🔊</span>
-            <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
+      
+      <!-- 17. Toll -->
+      <div class="audio-player" data-audio="Audio/Toll.mp3">
+        <div class="audio-title">Before & After Edit</div>
+        <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
+        <div class="progress-container">
+          <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+          <div class="time-display">
+            <span class="current-time">0:00</span>
+            <span class="total-time">0:00</span>
           </div>
         </div>
-        <div class="voice-text-box">
-          SampleTonyMillerText
+        <div class="volume-container">
+          <span>🔊</span>
+          <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
+        </div>
+      </div>
+      
+      <!-- 18. TonyMiller -->
+      <div class="audio-player" data-audio="Audio/TonyMiller.mp3">
+        <div class="audio-title">Before & After Edit</div>
+        <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
+        <div class="progress-container">
+          <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+          <div class="time-display">
+            <span class="current-time">0:00</span>
+            <span class="total-time">0:00</span>
+          </div>
+        </div>
+        <div class="volume-container">
+          <span>🔊</span>
+          <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
         </div>
       </div>
     </div>
@@ -634,19 +675,21 @@
     <!-- Index 2: Ads (hidden by default) -->
     <div class="content-container hidden" id="index2">
       <!-- Mini Segment 1 -->
-      <div class="mini-segment">
         <div class="audio-player" data-audio="Audio/Ad1.mp3">
           <div class="audio-title">Commercial Reel</div>
           <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
+          <div class="progress-container">
+            <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+            <div class="time-display">
+              <span class="current-time">0:00</span>
+              <span class="total-time">0:00</span>
+            </div>
+          </div>
           <div class="volume-container">
             <span>🔊</span>
             <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
           </div>
         </div>
-        <div class="voice-text-box">
-          A compilation of commercial and advertisement reads I've done. I can deliver professional, energetic, and engaging reads for any product or service!
-        </div>
-      </div>
     </div>
 
     <!-- Index 3: Audio Editing (hidden by default) -->
@@ -656,6 +699,13 @@
         <div class="audio-player" data-audio="Audio/Editing1.mp3">
           <div class="audio-title">Before & After Edit</div>
           <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
+          <div class="progress-container">
+            <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+            <div class="time-display">
+              <span class="current-time">0:00</span>
+              <span class="total-time">0:00</span>
+            </div>
+          </div>
           <div class="volume-container">
             <span>🔊</span>
             <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
