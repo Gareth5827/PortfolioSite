@@ -214,6 +214,42 @@
       cursor: pointer;
     }
 
+        .progress-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 8px;
+      -webkit-appearance: none;
+      appearance: none;
+      background: rgba(237, 244, 110, 0.3);
+      outline: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .progress-bar::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #EDF46E;
+      cursor: pointer;
+    }
+
+    .time-display {
+      display: flex;
+      justify-content: space-between;
+      color: white;
+      font-family: 'HW', Arial, sans-serif;
+      font-size: 12pt;
+    }
+
     .audio-title {
       color: white;
       font-family: 'HW', Arial, sans-serif;
@@ -308,19 +344,21 @@
     <!-- Index 1: Characters (default shown) -->
     <div class="content-container" id="index1">
       <!-- Mini Segment 1 - Announcer -->
-      <div class="mini-segment">
         <div class="audio-player" data-audio="MP3s/VoiceActing/Announcer.mp3">
           <div class="audio-title">Announcer</div>
           <button class="play-pause-btn" onclick="togglePlay(this)">▶</button>
+          <div class="progress-container">
+            <input type="range" class="progress-bar" min="0" max="100" value="0" onchange="seekAudio(this)">
+            <div class="time-display">
+              <span class="current-time">0:00</span>
+              <span class="total-time">0:00</span>
+            </div>
+          </div>
           <div class="volume-container">
             <span>🔊</span>
             <input type="range" class="volume-slider" min="0" max="100" value="100" onchange="adjustVolume(this)">
           </div>
         </div>
-        <div class="voice-text-box">
-          SampleAnnouncerText
-        </div>
-      </div>
 
       <!-- Mini Segment 2 - Buttons -->
       <div class="mini-segment">
@@ -642,16 +680,37 @@
       // If there's already audio playing and it's different from the clicked one
       if (currentAudio && currentButton && currentButton !== button) {
         currentAudio.pause();
+        currentAudio.removeEventListener('timeupdate', updateProgress);
         currentButton.textContent = '▶';
       }
       
-      // If no audio element exists, create one with download enabled
+      // If no audio element exists, create one
       if (!audioPlayer.querySelector('audio')) {
         const audio = document.createElement('audio');
         audio.src = audioFile;
         audio.setAttribute('controlsList', 'nodownload');
         audio.setAttribute('oncontextmenu', 'return false;');
+        audio.preload = 'metadata';
         audioPlayer.appendChild(audio);
+        
+        // Set up timeupdate event
+        audio.addEventListener('timeupdate', function() {
+          updateProgress(audioPlayer);
+        });
+        
+        // Set up loadedmetadata event
+        audio.addEventListener('loadedmetadata', function() {
+          updateProgress(audioPlayer);
+        });
+        
+        // Set up ended event
+        audio.addEventListener('ended', function() {
+          const btn = audioPlayer.querySelector('.play-pause-btn');
+          btn.textContent = '▶';
+          currentAudio = null;
+          currentButton = null;
+          updateProgress(audioPlayer);
+        });
       }
       
       const audio = audioPlayer.querySelector('audio');
@@ -673,6 +732,41 @@
       if (volumeSlider) {
         audio.volume = volumeSlider.value / 100;
       }
+    }
+
+    function updateProgress(audioPlayer) {
+      const audio = audioPlayer.querySelector('audio');
+      const progressBar = audioPlayer.querySelector('.progress-bar');
+      const currentTimeSpan = audioPlayer.querySelector('.current-time');
+      const totalTimeSpan = audioPlayer.querySelector('.total-time');
+      
+      if (audio && progressBar && currentTimeSpan && totalTimeSpan) {
+        const currentTime = audio.currentTime;
+        const duration = audio.duration;
+        
+        if (!isNaN(duration)) {
+          progressBar.max = duration;
+          progressBar.value = currentTime;
+          
+          currentTimeSpan.textContent = formatTime(currentTime);
+          totalTimeSpan.textContent = formatTime(duration);
+        }
+      }
+    }
+
+    function seekAudio(progressBar) {
+      const audioPlayer = progressBar.closest('.audio-player');
+      const audio = audioPlayer.querySelector('audio');
+      
+      if (audio) {
+        audio.currentTime = progressBar.value;
+      }
+    }
+
+    function formatTime(seconds) {
+      const minutes = Math.floor(seconds / 60);
+      const remainingSeconds = Math.floor(seconds % 60);
+      return minutes + ':' + (remainingSeconds < 10 ? '0' : '') + remainingSeconds;
     }
 
     function adjustVolume(slider) {
